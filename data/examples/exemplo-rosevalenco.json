@@ -1,0 +1,800 @@
+{
+  "version": 1,
+  "slug": "exemplo-rosevalenco",
+  "url": "https://rosevalenco.com.br/",
+  "finalUrl": "https://rosevalenco.com.br/",
+  "host": "rosevalenco.com.br",
+  "createdAt": "2026-09-15T14:30:00.000Z",
+  "strategy": "mobile",
+  "score": 49,
+  "scoreCap": {
+    "max": 49,
+    "reason": "100 arquivos do site não carregam"
+  },
+  "categories": {
+    "performance": {
+      "score": 43,
+      "passed": 13,
+      "total": 27,
+      "checks": [
+        {
+          "id": "first-contentful-paint",
+          "title": "Tempo até aparecer a primeira coisa na tela",
+          "passed": false,
+          "displayValue": "3,2s",
+          "source": "lighthouse"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Tempo até o conteúdo principal aparecer",
+          "passed": false,
+          "displayValue": "8,2s",
+          "source": "lighthouse"
+        },
+        {
+          "id": "total-blocking-time",
+          "title": "Tempo em que a página fica travada",
+          "passed": false,
+          "displayValue": "310 ms",
+          "source": "lighthouse"
+        },
+        {
+          "id": "cumulative-layout-shift",
+          "title": "Estabilidade visual (quanto a página “pula” ao carregar)",
+          "passed": false,
+          "displayValue": "0,326",
+          "source": "lighthouse"
+        },
+        {
+          "id": "speed-index",
+          "title": "Velocidade com que a página vai se desenhando",
+          "passed": false,
+          "displayValue": "4,8s",
+          "source": "lighthouse"
+        },
+        {
+          "id": "cache-insight",
+          "title": "Arquivos guardados no navegador",
+          "passed": false,
+          "displayValue": "economia de 219 KB",
+          "source": "lighthouse"
+        },
+        {
+          "id": "cls-culprits-insight",
+          "title": "Causas da página pular",
+          "passed": false,
+          "source": "lighthouse"
+        },
+        {
+          "id": "forced-reflow-insight",
+          "title": "Scripts que forçam o navegador a recalcular a página",
+          "passed": false,
+          "source": "lighthouse"
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Tamanho das imagens",
+          "passed": false,
+          "displayValue": "economia de 63 KB",
+          "source": "lighthouse"
+        },
+        {
+          "id": "legacy-javascript-insight",
+          "title": "JavaScript antigo desnecessário",
+          "passed": false,
+          "displayValue": "economia de 37 KB",
+          "source": "lighthouse"
+        },
+        {
+          "id": "render-blocking-insight",
+          "title": "Arquivos que atrasam o carregamento",
+          "passed": false,
+          "displayValue": "economia de 150 ms",
+          "source": "lighthouse"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "JavaScript que não é usado",
+          "passed": false,
+          "displayValue": "economia de 302 KB",
+          "source": "lighthouse"
+        },
+        {
+          "id": "bootup-time",
+          "title": "Tempo processando JavaScript",
+          "passed": false,
+          "displayValue": "5,4s",
+          "source": "lighthouse"
+        },
+        {
+          "id": "mainthread-work-breakdown",
+          "title": "Trabalho do celular pra montar a página",
+          "passed": false,
+          "displayValue": "11,1s",
+          "source": "lighthouse"
+        },
+        {
+          "id": "document-latency-insight",
+          "title": "Tempo de resposta do servidor",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "dom-size-insight",
+          "title": "Tamanho da estrutura da página",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "duplicated-javascript-insight",
+          "title": "JavaScript duplicado",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "font-display-insight",
+          "title": "Fontes aparecem sem esperar",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "modern-http-insight",
+          "title": "Protocolo moderno (HTTP/2)",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "viewport-insight",
+          "title": "Configuração que faz o site funcionar no celular",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "unminified-css",
+          "title": "CSS compactado",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "JavaScript compactado",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "CSS que não é usado",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "total-byte-weight",
+          "title": "Peso total da página",
+          "passed": true,
+          "displayValue": "1,4 MB",
+          "source": "lighthouse"
+        },
+        {
+          "id": "unsized-images",
+          "title": "Imagens com tamanho definido",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "bf-cache",
+          "title": "Voltar e avançar instantâneo",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "redirects",
+          "title": "Redirecionamentos",
+          "passed": true,
+          "source": "lighthouse"
+        }
+      ]
+    },
+    "seo": {
+      "score": 100,
+      "passed": 10,
+      "total": 11,
+      "checks": [
+        {
+          "id": "farol-og-image",
+          "title": "Imagem de pré-visualização do link (WhatsApp, redes sociais)",
+          "passed": false,
+          "source": "farol"
+        },
+        {
+          "id": "is-crawlable",
+          "title": "Página liberada pro Google",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "document-title",
+          "title": "Título da página",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "meta-description",
+          "title": "Resumo que aparece no Google",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "http-status-code",
+          "title": "Página responde sem erro",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "link-text",
+          "title": "Texto dos links",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "crawlable-anchors",
+          "title": "Links que o Google consegue seguir",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "robots-txt",
+          "title": "Arquivo robots.txt",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "image-alt",
+          "title": "Descrição da imagem (pra leitores de tela e pro Google)",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "hreflang",
+          "title": "Idiomas alternativos",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "farol-og-text",
+          "title": "Título e descrição da pré-visualização do link",
+          "passed": true,
+          "source": "farol"
+        }
+      ]
+    },
+    "accessibility": {
+      "score": 91,
+      "passed": 14,
+      "total": 16,
+      "checks": [
+        {
+          "id": "button-name",
+          "title": "Botões com nome",
+          "passed": false,
+          "source": "lighthouse"
+        },
+        {
+          "id": "color-contrast",
+          "title": "Contraste do texto",
+          "passed": false,
+          "source": "lighthouse"
+        },
+        {
+          "id": "aria",
+          "title": "Marcações de acessibilidade (ARIA) corretas",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "document-title",
+          "title": "Título da página",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "heading-order",
+          "title": "Ordem dos títulos",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "html-has-lang",
+          "title": "Idioma da página definido",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "html-lang-valid",
+          "title": "Idioma da página válido",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "image-alt",
+          "title": "Descrição da imagem (pra leitores de tela e pro Google)",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "label",
+          "title": "Campos de formulário com rótulo",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "link-name",
+          "title": "Links com nome",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "list",
+          "title": "Listas marcadas corretamente",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "listitem",
+          "title": "Itens de lista marcados corretamente",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "meta-viewport",
+          "title": "Zoom permitido no celular",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "target-size",
+          "title": "Tamanho das áreas de toque",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "landmark-one-main",
+          "title": "Região principal marcada",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "autocomplete-valid",
+          "title": "Preenchimento automático dos formulários",
+          "passed": true,
+          "source": "lighthouse"
+        }
+      ]
+    },
+    "best-practices": {
+      "score": 73,
+      "passed": 10,
+      "total": 14,
+      "checks": [
+        {
+          "id": "third-party-cookies",
+          "title": "Cookies de terceiros",
+          "passed": false,
+          "displayValue": "2 cookies encontrados",
+          "source": "lighthouse"
+        },
+        {
+          "id": "errors-in-console",
+          "title": "Erros no navegador",
+          "passed": false,
+          "source": "lighthouse"
+        },
+        {
+          "id": "inspector-issues",
+          "title": "Avisos técnicos do navegador",
+          "passed": false,
+          "source": "lighthouse"
+        },
+        {
+          "id": "farol-broken-resources",
+          "title": "Todos os arquivos carregam sem erro",
+          "passed": false,
+          "displayValue": "100 com erro",
+          "source": "farol"
+        },
+        {
+          "id": "is-on-https",
+          "title": "Conexão segura (HTTPS)",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "geolocation-on-start",
+          "title": "Pedido de localização ao abrir",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "notification-on-start",
+          "title": "Pedido de notificação ao abrir",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "paste-preventing-inputs",
+          "title": "Colar em campos de formulário",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "image-aspect-ratio",
+          "title": "Proporção das imagens",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "image-size-responsive",
+          "title": "Resolução das imagens",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "doctype",
+          "title": "Tipo de documento declarado",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "charset",
+          "title": "Codificação de caracteres",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "deprecations",
+          "title": "Recursos obsoletos do navegador",
+          "passed": true,
+          "source": "lighthouse"
+        },
+        {
+          "id": "valid-source-maps",
+          "title": "Mapas de código para depuração",
+          "passed": true,
+          "source": "lighthouse"
+        }
+      ]
+    }
+  },
+  "issues": [
+    {
+      "id": "cls-culprits-insight",
+      "category": "performance",
+      "title": "Elementos que fazem a página pular",
+      "severity": "bad",
+      "impact": "high",
+      "what": "2 elementos mudam de lugar durante o carregamento.",
+      "why": "A pessoa vai tocar num botão e acaba tocando em outro.",
+      "how": "Defina largura e altura de imagens e vídeos, reserve espaço para banners e evite textos animados que mudam de tamanho no topo.",
+      "elements": [
+        "<div class=\"relative z-10 container mx-auto px-4 pt-20 pb-12\">",
+        "<span class=\"animate-pulse text-blue-300\">"
+      ]
+    },
+    {
+      "id": "unused-javascript",
+      "category": "performance",
+      "title": "Tem JavaScript sobrando",
+      "severity": "bad",
+      "impact": "high",
+      "what": "7 arquivos de JavaScript têm muito código que a página não usa. Dá pra economizar 302 KB.",
+      "why": "Todo código baixado precisa ser processado pelo celular, mesmo sem uso. Isso deixa a página lenta e travada.",
+      "how": "Remova bibliotecas e scripts que não usa, divida o código por página e carregue ferramentas de terceiros só depois da página abrir.",
+      "elements": [
+        "https://www.googletagmanager.com/gtag/js?id=G-6DL274TJWK",
+        "https://www.googletagmanager.com/gtag/js?id=AW-18071000213&cx=c&gtm=4e69b1",
+        "https://rosevalenco.com.br/_next/static/chunks/08svf9h_v368k.js",
+        "https://connect.facebook.net/en_US/fbevents.js",
+        "https://connect.facebook.net/signals/config/2369328496903692?v=2.9.400&r=stable&domain=rosevalenco.com.br&im=…",
+        "https://rosevalenco.com.br/_next/static/chunks/0~bqtg3ar3p8g.js",
+        "https://rosevalenco.com.br/_next/static/chunks/0a3pg.k92a8rq.js"
+      ]
+    },
+    {
+      "id": "button-name",
+      "category": "accessibility",
+      "title": "Botões sem nome",
+      "severity": "bad",
+      "impact": "high",
+      "what": "4 botões não têm nome que um leitor de tela consiga anunciar.",
+      "why": "Quem usa leitor de tela ouve só \"botão\", sem saber o que ele faz.",
+      "how": "Coloque texto no botão ou um aria-label dizendo a ação.",
+      "elements": [
+        "<button type=\"button\" role=\"combobox\" aria-controls=\"radix-_R_4hlfknpb_\" aria-expanded=\"false\" aria-autocompl…",
+        "<button type=\"button\" role=\"combobox\" aria-controls=\"radix-_R_4plfknpb_\" aria-expanded=\"false\" aria-autocompl…",
+        "<button type=\"button\" role=\"combobox\" aria-controls=\"radix-_R_51lfknpb_\" aria-expanded=\"false\" aria-autocompl…",
+        "<button type=\"button\" role=\"combobox\" aria-controls=\"radix-_R_59lfknpb_\" aria-expanded=\"false\" aria-autocompl…"
+      ]
+    },
+    {
+      "id": "color-contrast",
+      "category": "accessibility",
+      "title": "Texto difícil de ler",
+      "severity": "bad",
+      "impact": "high",
+      "what": "3 textos têm pouco contraste com o fundo.",
+      "why": "Texto claro demais some no sol, em tela de celular barata e pra quem enxerga pouco.",
+      "how": "Escureça o texto ou o fundo até chegar em contraste de 4,5:1. Botão com texto branco precisa de fundo escuro o bastante.",
+      "elements": [
+        "<a href=\"https://wa.me/5518997125210?text=Ol%C3%A1!%20Gostaria%20de%20encontrar%20u…\" target=\"_blank\" rel=\"no…",
+        "<p class=\"text-sm font-semibold text-[#25D366] uppercase tracking-widest mb-1\">",
+        "<p class=\"text-sm text-gray-500 leading-relaxed\">"
+      ]
+    },
+    {
+      "id": "farol-broken-resources",
+      "category": "best-practices",
+      "title": "Arquivos do seu site não estão carregando",
+      "severity": "bad",
+      "impact": "high",
+      "what": "100 arquivos falharam ao carregar (imagens, scripts ou dados), quase todos vindos de cllookhlreexacjzlekx.supabase.co.",
+      "why": "Quem visita vê imagem quebrada ou pedaço da página faltando. Passa descuido, e o que não carrega também não conta pro Google.",
+      "how": "Confira se o serviço em cllookhlreexacjzlekx.supabase.co está ativo. Armazenamento em nuvem pausado, domínio expirado ou arquivo apagado são as causas mais comuns.",
+      "elements": [
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/e35cb7ce-2dbd-4eaf-8717-3d1…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/b9792a31-a2ec-4373-af53-6a7…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/e35cb7ce-2dbd-4eaf-8717-3d1…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/e35cb7ce-2dbd-4eaf-8717-3d1…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/e35cb7ce-2dbd-4eaf-8717-3d1…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/e35cb7ce-2dbd-4eaf-8717-3d1…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/e35cb7ce-2dbd-4eaf-8717-3d1…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/e35cb7ce-2dbd-4eaf-8717-3d1…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/e35cb7ce-2dbd-4eaf-8717-3d1…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/e35cb7ce-2dbd-4eaf-8717-3d1…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/2804b532-d8cd-433e-952a-4ae…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/f6ab95e3-5322-43d3-9e26-980…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/c6bc2b35-085c-478f-98f1-ff5…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/c6bc2b35-085c-478f-98f1-ff5…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/c6bc2b35-085c-478f-98f1-ff5…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/c6bc2b35-085c-478f-98f1-ff5…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/c6bc2b35-085c-478f-98f1-ff5…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/c6bc2b35-085c-478f-98f1-ff5…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/c6bc2b35-085c-478f-98f1-ff5…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/c6bc2b35-085c-478f-98f1-ff5…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/c6bc2b35-085c-478f-98f1-ff5…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/c6bc2b35-085c-478f-98f1-ff5…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/c6bc2b35-085c-478f-98f1-ff5…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/c6bc2b35-085c-478f-98f1-ff5…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/c6bc2b35-085c-478f-98f1-ff5…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/c6bc2b35-085c-478f-98f1-ff5…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/storage/v1/object/public/property-images/5d573c23-af17-4e48-aa5f-e7a…",
+        "https://cllookhlreexacjzlekx.supabase.co/rest/v1/properties?select=neighborhood&status=eq.active&order=neighb…",
+        "https://cllookhlreexacjzlekx.supabase.co/rest/v1/agent_profile?select=*"
+      ]
+    },
+    {
+      "id": "cache-insight",
+      "category": "performance",
+      "title": "O navegador baixa tudo de novo a cada visita",
+      "severity": "bad",
+      "impact": "medium",
+      "what": "6 arquivos não ficam guardados no navegador de quem volta. Dá pra economizar 219 KB.",
+      "why": "Quem volta ao site espera tudo carregar de novo, sem necessidade.",
+      "how": "Configure cabeçalhos de cache longos (Cache-Control) para imagens, fontes, CSS e JavaScript.",
+      "elements": [
+        "https://connect.facebook.net/en_US/fbevents.js",
+        "https://connect.facebook.net/signals/config/2369328496903692?v=2.9.400&r=stable&domain=rosevalenco.com.br&im=…",
+        "https://rosevalenco.com.br/logo.png",
+        "https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495",
+        "https://rosevalenco.com.br/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+        "https://www.facebook.com/tr/?id=2369328496903692&ev=PageView&dl=https%3A%2F%2Frosevalenco.com.br%2F&rl=&if=fa…"
+      ]
+    },
+    {
+      "id": "image-delivery-insight",
+      "category": "performance",
+      "title": "Imagens pesadas demais",
+      "severity": "bad",
+      "impact": "medium",
+      "what": "1 imagem está maior do que precisa. Dá pra economizar 63 KB.",
+      "why": "Imagem pesada é o motivo mais comum de site lento no celular, e ainda gasta o plano de dados de quem visita.",
+      "how": "Converta para WebP ou AVIF, reduza para o tamanho que realmente aparece na tela e use loading=\"lazy\" nas imagens abaixo do topo.",
+      "elements": [
+        "<img src=\"/logo.png\" alt=\"Logo\" class=\"w-full h-full object-cover\">"
+      ]
+    },
+    {
+      "id": "legacy-javascript-insight",
+      "category": "performance",
+      "title": "JavaScript feito para navegadores antigos",
+      "severity": "bad",
+      "impact": "medium",
+      "what": "Parte do código ainda é convertida para navegadores que quase ninguém usa mais. Dá pra economizar 37 KB.",
+      "why": "É peso extra baixado por todo mundo.",
+      "how": "Atualize a configuração de build para navegadores modernos.",
+      "elements": [
+        "https://rosevalenco.com.br/_next/static/chunks/0a3pg.k92a8rq.js",
+        "https://connect.facebook.net/en_US/fbevents.js",
+        "https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495"
+      ]
+    },
+    {
+      "id": "bootup-time",
+      "category": "performance",
+      "title": "O celular gasta muito tempo processando JavaScript",
+      "severity": "bad",
+      "impact": "medium",
+      "what": "O processamento de scripts levou 5,4s.",
+      "why": "Enquanto processa, a página não responde.",
+      "how": "Remova scripts que não usa e adie os de terceiros (chat, pixels, analytics).",
+      "elements": [
+        "https://rosevalenco.com.br/_next/static/chunks/0a3pg.k92a8rq.js",
+        "https://rosevalenco.com.br/_next/static/chunks/0jj_v49jcsdmx.js",
+        "https://rosevalenco.com.br/",
+        "Unattributable",
+        "https://www.googletagmanager.com/gtag/js?id=G-6DL274TJWK",
+        "https://www.googletagmanager.com/gtag/js?id=AW-18071000213&cx=c&gtm=4e69b1",
+        "https://connect.facebook.net/en_US/fbevents.js",
+        "https://rosevalenco.com.br/_next/static/chunks/003n0vu71oz8y.js",
+        "https://connect.facebook.net/signals/config/2369328496903692?v=2.9.400&r=stable&domain=rosevalenco.com.br&im=…",
+        "https://rosevalenco.com.br/_next/static/chunks/0y5c0i4ky8jf6.js"
+      ]
+    },
+    {
+      "id": "farol-og-image",
+      "category": "seo",
+      "title": "Seu link aparece sem imagem no WhatsApp",
+      "severity": "warn",
+      "impact": "medium",
+      "what": "A página não define a imagem que aparece quando alguém compartilha o link.",
+      "why": "Link com imagem chama mais atenção no WhatsApp, Instagram e Facebook, e passa mais confiança.",
+      "how": "Adicione <meta property=\"og:image\" content=\"https://seusite.com.br/capa.jpg\"> com uma imagem de 1200x630."
+    },
+    {
+      "id": "forced-reflow-insight",
+      "category": "performance",
+      "title": "Scripts fazem o navegador recalcular a página",
+      "severity": "bad",
+      "impact": "low",
+      "what": "Alguns scripts leem e alteram o tamanho dos elementos em sequência, forçando o navegador a refazer o layout várias vezes.",
+      "why": "Isso trava a página e deixa rolagem e animações engasgando.",
+      "how": "Agrupe leituras e escritas de layout, e prefira animar transform e opacity em vez de tamanho e posição.",
+      "elements": [
+        "https://rosevalenco.com.br/_next/static/chunks/0a3pg.k92a8rq.js",
+        "https://rosevalenco.com.br/_next/static/chunks/003n0vu71oz8y.js",
+        "https://rosevalenco.com.br/_next/static/chunks/0jj_v49jcsdmx.js"
+      ]
+    },
+    {
+      "id": "render-blocking-insight",
+      "category": "performance",
+      "title": "Arquivos atrasam o carregamento",
+      "severity": "bad",
+      "impact": "low",
+      "what": "1 arquivo precisa carregar antes de qualquer coisa aparecer na tela. Dá pra economizar 150 ms.",
+      "why": "Enquanto esses arquivos não chegam, a tela fica em branco.",
+      "how": "Carregue fontes com display=swap, adie scripts com defer e remova CSS ou bibliotecas que a primeira tela não usa.",
+      "elements": [
+        "https://rosevalenco.com.br/_next/static/chunks/14uv55h-si.8z.css"
+      ]
+    },
+    {
+      "id": "third-party-cookies",
+      "category": "best-practices",
+      "title": "O site depende de cookies de terceiros",
+      "severity": "bad",
+      "impact": "low",
+      "what": "2 cookies de terceiros foram encontrados.",
+      "why": "Os navegadores estão bloqueando esses cookies, então rastreamento e anúncios podem parar de funcionar.",
+      "how": "Confira se as ferramentas de anúncio e análise estão atualizadas e configuradas no seu próprio domínio.",
+      "elements": [
+        "https://googleads.g.doubleclick.net/pagead/viewthroughconversion/18071000213/?random=1789499939340&cv=11&fst=…",
+        "https://www.facebook.com/tr/?id=2369328496903692&ev=PageView&dl=https%3A%2F%2Frosevalenco.com.br%2F&rl=&if=fa…"
+      ]
+    },
+    {
+      "id": "errors-in-console",
+      "category": "best-practices",
+      "title": "O navegador registra erros na página",
+      "severity": "bad",
+      "impact": "low",
+      "what": "1 erro apareceu no console do navegador.",
+      "why": "Erro costuma significar algo que não funcionou: imagem, formulário ou script quebrado.",
+      "how": "Abra o site com as ferramentas de desenvolvedor (F12), aba Console, e corrija os erros da lista.",
+      "elements": [
+        "network"
+      ]
+    }
+  ],
+  "metrics": [
+    {
+      "key": "lcp",
+      "value": 8159.526000000002,
+      "source": "lab"
+    },
+    {
+      "key": "cls",
+      "value": 0.3257250939860334,
+      "source": "lab"
+    },
+    {
+      "key": "ttfb",
+      "value": 64,
+      "source": "lab"
+    }
+  ],
+  "loadTimeMs": 8160,
+  "site": {
+    "title": "Imóveis Birigui-SP | Compra, Venda e Locação | Rose Valenço Imóveis",
+    "favicon": "https://rosevalenco.com.br/logo.png"
+  }
+}

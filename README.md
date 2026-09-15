@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Farol
 
-## Getting Started
+O raio-x do seu site em 30 segundos. Cole um endereço e receba um relatório visual, em português claro, com nota de 0 a 100 e a lista do que arrumar primeiro.
 
-First, run the development server:
+Toda decisão visual está no [DESIGN.md](DESIGN.md). Leia antes de mexer em qualquer tela.
+
+## Rodando localmente
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra http://localhost:3000. Sem nenhuma variável de ambiente o Farol já funciona:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Peça | Sem configurar | Configurado |
+|---|---|---|
+| Medição | Cota anônima da PageSpeed (costuma estar esgotada) | `PSI_API_KEY` |
+| Relatórios | Arquivos JSON em `.data/reports/` | `DATABASE_URL` (Postgres) |
+| Limite e cache | Memória do processo | `UPSTASH_REDIS_REST_URL` e `UPSTASH_REDIS_REST_TOKEN` |
+| Botão de WhatsApp | Escondido | `NEXT_PUBLIC_WHATSAPP_NUMBER` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copie `.env.example` para `.env.local` e preencha o que tiver.
 
-## Learn More
+Três relatórios reais de exemplo ficam em `data/examples/` e abrem sem configuração nenhuma, por exemplo em `/r/exemplo-gabrielvalenco`. Os componentes base ficam em `/dev/components` (só em desenvolvimento).
 
-To learn more about Next.js, take a look at the following resources:
+## Como a análise funciona
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`POST /api/analyze` recebe `{ url }` e responde em NDJSON, um evento por linha, com o progresso real:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Normaliza a URL e bloqueia endereços internos (proteção contra SSRF).
+2. Reaproveita o relatório se a mesma URL foi analisada nos últimos 10 minutos.
+3. Aplica o limite de 5 análises a cada 10 minutos por IP.
+4. Roda em paralelo a PageSpeed Insights (celular, 4 categorias) e o fetch do HTML com checagens próprias.
+5. Monta o relatório (`lib/analysis/build-report.ts`), salva e devolve o endereço `/r/[slug]`.
 
-## Deploy on Vercel
+Se o HTML falhar e a PageSpeed responder, o relatório sai marcado como análise parcial.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Publicando na Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Crie o repositório no GitHub e envie o código.
+2. Na Vercel, importe o repositório. O framework é detectado sozinho.
+3. Crie as contas e copie as credenciais para **Settings → Environment Variables**:
+   - **PageSpeed:** no Google Cloud, crie um projeto, ative a *PageSpeed Insights API* e gere uma chave de API restrita a ela → `PSI_API_KEY`.
+   - **Neon** ou **Supabase:** crie um banco Postgres e copie a connection string *pooled* → `DATABASE_URL`. A tabela é criada sozinha na primeira análise (SQL em `db/schema.sql`).
+   - **Upstash:** crie um Redis e copie a REST URL e o token.
+   - `NEXT_PUBLIC_SITE_URL` com o domínio final e, se quiser o botão de conversão, `NEXT_PUBLIC_WHATSAPP_NUMBER`.
+4. Faça o deploy.
+
+A rota de análise pede até 90 segundos de execução (`maxDuration`), coberto pelo plano gratuito da Vercel com Fluid Compute.
+
+## Estrutura
+
+```
+app/
+  page.tsx                  landing
+  r/[slug]/page.tsx         relatório
+  r/[slug]/print/page.tsx   versão de impressão (PDF pelo navegador)
+  api/analyze/route.ts      stream das etapas
+  api/og/route.tsx          imagem de compartilhamento
+components/                 componentes do DESIGN.md, report/ e ui/ (shadcn com tokens próprios)
+lib/
+  analysis/                 PSI, HTML, SSRF, montagem do relatório, tradução das verificações
+  motion.ts score.ts copy.ts  fontes únicas de movimento, faixa de nota e texto
+  storage.ts limits.ts      Postgres/arquivo e Upstash/memória
+data/examples/              relatórios de exemplo versionados
+```
+
+## Scripts
+
+```bash
+npm run dev     # desenvolvimento
+npm run build   # build de produção
+npm run lint    # ESLint
+```
