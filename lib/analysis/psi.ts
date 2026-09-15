@@ -87,7 +87,8 @@ function classify(message: string): AnalysisError {
 
 export async function runPageSpeed(
   url: string,
-  { timeoutMs = 75_000, signal }: { timeoutMs?: number; signal?: AbortSignal } = {},
+  // Sites pesados levam mais de 60s na PSI; alguns ela nem consegue terminar.
+  { timeoutMs = 110_000, signal }: { timeoutMs?: number; signal?: AbortSignal } = {},
 ): Promise<PsiResult> {
   const params = new URLSearchParams({ url, strategy: "mobile", locale: "pt_BR" });
   for (const category of ["performance", "seo", "accessibility", "best-practices"]) {
@@ -103,8 +104,9 @@ export async function runPageSpeed(
     });
   } catch (error) {
     if (signal?.aborted) throw new AnalysisError("internal", "psi cancelada");
-    const timedOut = (error as Error).name === "TimeoutError";
-    throw new AnalysisError(timedOut ? "unreachable" : "measure_failed", `psi fetch: ${(error as Error).message}`);
+    // Tempo esgotado e falha da medicao, nao prova de site fora do ar:
+    // o HTML pode ter respondido normalmente.
+    throw new AnalysisError("measure_failed", `psi fetch: ${(error as Error).message}`);
   }
 
   const payload = (await response.json().catch(() => null)) as

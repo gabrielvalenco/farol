@@ -20,8 +20,8 @@ import { normalizeUrl } from "@/lib/url";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-/** A PSI leva de 10 a 30s, as vezes mais. */
-export const maxDuration = 90;
+/** A PSI leva de 10 a 30s, e ate ~110s em site pesado (limite em lib/analysis/psi.ts). */
+export const maxDuration = 120;
 
 type Settled<T> = { ok: true; value: T } | { ok: false; error: AnalysisError };
 
@@ -119,10 +119,13 @@ export async function POST(request: Request): Promise<Response> {
 
         if (!psi.ok) {
           // Os dois falharam por inacessibilidade: o site esta fora do ar.
+          // Se o HTML respondeu, o site esta no ar: a falha foi da medicao.
           const code =
-            psi.error.code === "unreachable" || (!html.ok && html.error.code === "unreachable")
-              ? "unreachable"
-              : psi.error.code;
+            psi.error.code === "unreachable" && html.ok
+              ? "measure_failed"
+              : psi.error.code === "unreachable" || (!html.ok && html.error.code === "unreachable")
+                ? "unreachable"
+                : psi.error.code;
           console.error("[farol] analise falhou", { url, psi: psi.error.message, html: html.ok ? "ok" : html.error.message });
           send({ type: "error", code });
           return finish();

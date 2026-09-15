@@ -16,7 +16,8 @@ export const env = {
   /** So troque para testes (servidor falso da PSI). */
   psiApiUrl: process.env.PSI_API_URL || "https://www.googleapis.com/pagespeedonline/v5/runPagespeed",
 
-  databaseUrl: process.env.DATABASE_URL || null,
+  // POSTGRES_URL e o nome que a integracao Supabase/Neon da Vercel cria sozinha.
+  databaseUrl: process.env.DATABASE_URL || process.env.POSTGRES_URL || null,
 
   upstashUrl: process.env.UPSTASH_REDIS_REST_URL || null,
   upstashToken: process.env.UPSTASH_REDIS_REST_TOKEN || null,

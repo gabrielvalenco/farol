@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { siteUrl } from "@/lib/site-url";
 import { TOKENS } from "@/lib/tokens";
 
 import "./globals.css";
@@ -18,10 +19,9 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: siteUrl(),
   title: {
     default: "Farol, o raio-x do seu site em 30 segundos",
     template: "%s, Farol",

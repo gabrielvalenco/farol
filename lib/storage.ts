@@ -29,7 +29,15 @@ let schemaReady: Promise<void> | null = null;
 function db(): Sql {
   if (!env.databaseUrl) throw new Error("DATABASE_URL ausente");
   // `prepare: false` e obrigatorio atras de pooler (Supabase e Neon em modo transaction).
-  sql ??= postgres(env.databaseUrl, { prepare: false, max: 3, idle_timeout: 20, connect_timeout: 10 });
+  // Banco remoto sempre com TLS, mesmo se a connection string vier sem `sslmode`.
+  const local = /@(localhost|127\.0\.0\.1)(:|\/)/.test(env.databaseUrl);
+  sql ??= postgres(env.databaseUrl, {
+    prepare: false,
+    max: 3,
+    idle_timeout: 20,
+    connect_timeout: 10,
+    ssl: local ? false : "require",
+  });
   schemaReady ??= sql`
     create table if not exists farol_reports (
       slug text primary key,

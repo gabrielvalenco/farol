@@ -263,7 +263,7 @@ export const ANALYSIS_ERRORS: Record<Exclude<AnalysisErrorCode, "rate_limited">,
   },
   measure_failed: {
     title: "A medição não terminou",
-    body: "A ferramenta do Google que mede o site não conseguiu concluir agora. Costuma ser passageiro: tente de novo em alguns minutos.",
+    body: "Seu site está no ar, mas a ferramenta do Google que mede a velocidade não conseguiu concluir. Isso acontece com páginas muito pesadas (vídeos grandes, animações 3D) ou por instabilidade passageira. Tente de novo em alguns minutos.",
     action: "Tentar de novo",
   },
   storage_failed: {
