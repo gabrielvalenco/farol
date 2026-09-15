@@ -14,6 +14,8 @@ export type AnalysisErrorCode =
   | "rate_limited"
   /** A cota diaria da PageSpeed acabou. */
   | "quota_exceeded"
+  /** A medicao passou do tempo limite da analise. */
+  | "timeout"
   /** A PageSpeed falhou por motivo dela. */
   | "measure_failed"
   /** Nao deu pra salvar o relatorio. */

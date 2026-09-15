@@ -190,12 +190,12 @@ export const ANALYSIS_STEPS: ReadonlyArray<{ key: StepKey; label: string }> = [
 export const COPY = {
   brand: {
     name: "Farol",
-    tagline: "O raio-x do seu site em 30 segundos.",
+    tagline: "O raio-x do seu site em menos de um minuto.",
   },
   landing: {
     title: "Descubra o que está travando o seu site.",
     subtitle:
-      "Análise completa de performance, SEO e acessibilidade em menos de 30 segundos. De graça.",
+      "Análise completa de performance, SEO e acessibilidade em menos de um minuto. De graça.",
     placeholder: "seusite.com.br",
     submit: "Analisar",
     reassurance: "Sem cadastro. Sem cartão.",
@@ -240,7 +240,7 @@ export interface ErrorCopy {
   action: string;
 }
 
-export const ANALYSIS_ERRORS: Record<Exclude<AnalysisErrorCode, "rate_limited">, ErrorCopy> = {
+export const ANALYSIS_ERRORS: Record<Exclude<AnalysisErrorCode, "rate_limited" | "timeout">, ErrorCopy> = {
   invalid_url: {
     title: "Esse endereço não parece um site",
     body: "Confira se digitou algo como seusite.com.br, sem espaços.",
@@ -318,7 +318,7 @@ export const REPORT_COPY = {
   printNow: "Imprimir ou salvar PDF",
   notFound: {
     title: "Relatório não encontrado",
-    body: "O link pode estar incompleto, ou o relatório foi removido. Você pode analisar o site de novo em 30 segundos.",
+    body: "O link pode estar incompleto, ou o relatório foi removido. Você pode analisar o site de novo em menos de um minuto.",
     action: "Analisar um site",
   },
 } as const;
@@ -351,6 +351,22 @@ export function verdictDetails(loadTimeMs: number | null, highImpactCount: numbe
 export function whatsappMessage(host: string, score: number, reportUrl: string): string {
   return `Olá! Analisei o site ${host} no Farol (nota ${score}) e quero ajuda pra arrumar os problemas: ${reportUrl}`;
 }
+
+/** Tempo limite da analise: diz o que aconteceu, o que isso ja revela e o que fazer. */
+export function timeoutError(seconds: number): ErrorCopy {
+  return {
+    title: "Esse site demorou demais pra medir",
+    body: `Paramos a medição depois de ${seconds} segundos. Isso costuma acontecer com páginas muito pesadas, com vídeos grandes, animações 3D ou muitas imagens, o que já indica lentidão pra quem visita. Tente de novo em alguns minutos.`,
+    action: "Tentar de novo",
+  };
+}
+
+export const ANALYSIS_PROGRESS_COPY = {
+  cancel: "Cancelar análise",
+  canceled: "Análise cancelada.",
+  slow: (seconds: number) =>
+    `Esse site está demorando mais que o normal. Páginas pesadas levam mais tempo pra medir; esperamos até ${seconds} segundos.`,
+} as const;
 
 /** 7. Rate limit: tempo restante, sem culpar ninguem. */
 export function rateLimitMessage(limit: number, windowMinutes: number, retryMinutes: number): string {

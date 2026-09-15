@@ -25,6 +25,11 @@ export const env = {
   /** DESIGN.md 7: "5 sites nos ultimos 10 minutos". */
   rateLimitMax: int(process.env.RATE_LIMIT_MAX, 5),
   rateLimitWindowMinutes: int(process.env.RATE_LIMIT_WINDOW_MINUTES, 10),
+  /**
+   * Corte da analise. Passou disso, a medicao e interrompida com mensagem honesta.
+   * Tem que caber no maxDuration da rota (60s), com folga pra salvar o relatorio.
+   */
+  analysisTimeoutSeconds: Math.min(int(process.env.ANALYSIS_TIMEOUT_SECONDS, 45), 50),
   /** Mesmo endereco analisado de novo dentro deste prazo reaproveita o relatorio. */
   cacheMinutes: int(process.env.CACHE_MINUTES, 10),
 

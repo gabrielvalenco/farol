@@ -4,7 +4,7 @@
  */
 
 import type { CategoryKey } from "@/lib/copy";
-import { clampScore, IMPACT_ORDER, scoreBand, type Impact, type MetricKey, type ScoreBand } from "@/lib/score";
+import { clampScore, scoreBand, type Impact, type MetricKey, type ScoreBand } from "@/lib/score";
 
 import {
   CHECK_LABELS,
@@ -90,54 +90,78 @@ function severityOf(score: number | null): ScoreBand {
   return scoreBand((score ?? 0) * 100);
 }
 
-function maxImpact(...impacts: Impact[]): Impact {
-  return impacts.reduce((best, current) => (IMPACT_ORDER[current] < IMPACT_ORDER[best] ? current : best), "low");
-}
-
 interface PerfSignals {
   tbt: number;
   cls: number;
 }
 
+/** Limites da regua de impacto (0 a 1). */
+const IMPACT_CUTS = { high: 0.6, medium: 0.3 };
+/** Se tudo e alto impacto, nada e: no maximo este tanto de "Alto impacto" por relatorio. */
+const MAX_HIGH_IMPACT = 3;
+/** Peso de cada categoria quando a verificacao nao tem economia medida. */
+const CATEGORY_URGENCY: Record<CategoryKey, number> = {
+  performance: 1,
+  seo: 0.8,
+  accessibility: 0.5,
+  "best-practices": 0.5,
+};
+const FIXED_PRIORITY: Record<Impact, number> = { high: 0.75, medium: 0.45, low: 0.15 };
+
+const clamp01 = (n: number) => Math.max(0, Math.min(1, n));
+
 /**
- * Impacto de um problema: quanto arrumar isso melhora o site.
- * Performance: pela economia estimada (tempo ou bytes). Demais: pelo peso
- * da verificacao na nota da propria categoria.
+ * Prioridade de um problema, de 0 a 1: quanto arruma-lo melhora o site.
+ *
+ * - Performance: pela economia estimada. 2,5s a menos de espera, 2,5 MB a menos
+ *   de imagem ou 1 MB a menos de JavaScript valem 1. Pagina que pula e JavaScript
+ *   que trava entram pelo tamanho do estrago medido (CLS e TBT).
+ * - Demais categorias: peso da verificacao na nota x urgencia da categoria.
+ *
+ * O selo ("Alto", "Medio", "Baixo") sai daqui em `assignImpact`, com teto de altos.
  */
-function impactOf(audit: LhAudit, category: CategoryKey, weight: number, signals: PerfSignals): Impact {
+function priorityOf(audit: LhAudit, category: CategoryKey, weight: number, signals: PerfSignals): number {
   const fixed = copyFor(audit.id)?.impact;
-  if (fixed) return fixed;
+  if (fixed) return FIXED_PRIORITY[fixed];
 
   if (category !== "performance") {
-    if (weight >= 7) return "high";
-    if (weight >= 3) return "medium";
-    return "low";
+    return clamp01((weight / 10) * CATEGORY_URGENCY[category]);
   }
 
-  const impacts: Impact[] = ["low"];
+  const candidates: number[] = [0.05];
   const saved = Math.max(audit.metricSavings?.LCP ?? 0, audit.metricSavings?.FCP ?? 0, audit.details?.overallSavingsMs ?? 0);
-  if (saved >= 1000) impacts.push("high");
-  else if (saved >= 300) impacts.push("medium");
+  candidates.push(saved / 2500);
 
   const bytes = audit.details?.overallSavingsBytes ?? wastedBytes(audit);
-  if (bytes >= 1_000_000) impacts.push("high");
-  else if (bytes >= 150_000) impacts.push("medium");
+  const isScript = /javascript|bootup/.test(audit.id);
+  candidates.push(bytes / (isScript ? 1_000_000 : 2_500_000));
 
   if ((audit.metricSavings?.CLS ?? 0) > 0 || audit.id === "cls-culprits-insight") {
-    impacts.push(signals.cls > 0.25 ? "high" : signals.cls > 0.1 ? "medium" : "low");
+    // 0,1 e o limite do bom; acima de 0,25 o Google ja considera ruim.
+    candidates.push((signals.cls - 0.1) / 0.3);
   }
   if (["bootup-time", "unused-javascript", "forced-reflow-insight", "legacy-javascript-insight", "duplicated-javascript-insight"].includes(audit.id)) {
-    impacts.push(signals.tbt >= 600 ? "high" : signals.tbt >= 200 ? "medium" : "low");
+    // TBT: 200 ms e o limite do bom; 1,5s trava a pagina de vez.
+    const tbtShare = (signals.tbt - 200) / 1300;
+    // O travamento e um so: conta cheio no processamento, parcial nas causas.
+    candidates.push(audit.id === "bootup-time" ? tbtShare : tbtShare * 0.6);
   }
   if (audit.id === "total-byte-weight") {
-    const total = audit.numericValue ?? 0;
-    impacts.push(total >= 5_000_000 ? "high" : total >= 2_500_000 ? "medium" : "low");
-  }
-  if (audit.id === "redirects" || audit.id === "server-response-time" || audit.id === "document-latency-insight") {
-    impacts.push(saved >= 600 ? "high" : "medium");
+    candidates.push(((audit.numericValue ?? 0) - 1_600_000) / 8_000_000);
   }
 
-  return maxImpact(...impacts);
+  return clamp01(Math.max(...candidates));
+}
+
+/** Aplica a regua e o teto de "Alto impacto" numa lista ja ordenada por prioridade. */
+function assignImpact(issues: ReportIssue[]): ReportIssue[] {
+  let highs = 0;
+  return issues.map((issue) => {
+    const priority = issue.priority ?? FIXED_PRIORITY[issue.impact];
+    let impact: Impact = priority >= IMPACT_CUTS.high ? "high" : priority >= IMPACT_CUTS.medium ? "medium" : "low";
+    if (impact === "high" && ++highs > MAX_HIGH_IMPACT) impact = "medium";
+    return { ...issue, impact };
+  });
 }
 
 function checkTitle(audit: LhAudit): string {
@@ -167,7 +191,8 @@ function issueFromAudit(audit: LhAudit, category: CategoryKey, weight: number, s
     category,
     title: copy?.title ?? cleanLighthouseText(audit.title),
     severity: severityOf(audit.score),
-    impact: impactOf(audit, category, weight, signals),
+    impact: "low",
+    priority: priorityOf(audit, category, weight, signals),
     what: copy ? resolveText(copy.what, ctx) : cleanLighthouseText(audit.displayValue) || cleanLighthouseText(audit.title),
     why: copy?.why ?? cleanLighthouseText(audit.description),
     how: copy?.how ?? "Veja os elementos afetados abaixo e corrija cada um deles.",
@@ -233,6 +258,8 @@ function brokenResources(result: PsiResult): FarolFinding {
       title: many ? "Arquivos do seu site não estão carregando" : "Alguns arquivos do site não carregam",
       severity: many ? "bad" : "warn",
       impact: many ? "high" : "medium",
+      // Arquivo quebrado e o problema mais visivel pra quem visita: fica no topo.
+      priority: many ? 0.95 : 0.5,
       what: `${count} ${count === 1 ? "arquivo falhou" : "arquivos falharam"} ao carregar (imagens, scripts ou dados)${
         concentrated ? `, quase todos vindos de ${topHost}` : ""
       }.`,
@@ -266,6 +293,7 @@ function sharePreview(html: HtmlFacts): FarolFinding[] {
           title: "Seu link aparece sem imagem no WhatsApp",
           severity: "warn",
           impact: "medium",
+          priority: 0.4,
           what: "A página não define a imagem que aparece quando alguém compartilha o link.",
           why: "Link com imagem chama mais atenção no WhatsApp, Instagram e Facebook, e passa mais confiança.",
           how: "Adicione <meta property=\"og:image\" content=\"https://seusite.com.br/capa.jpg\"> com uma imagem de 1200x630.",
@@ -288,6 +316,7 @@ function sharePreview(html: HtmlFacts): FarolFinding[] {
           title: "O link compartilhado não tem título e descrição próprios",
           severity: "warn",
           impact: "low",
+          priority: 0.15,
           what: "Faltam og:title ou og:description, que aparecem junto do link compartilhado.",
           why: "Sem eles, cada rede mostra um texto diferente, às vezes cortado ou sem sentido.",
           how: "Adicione <meta property=\"og:title\"> e <meta property=\"og:description\"> com o nome e o resumo do negócio.",
@@ -398,7 +427,7 @@ export function buildReport({ slug, url, host, psi, html, createdAt = new Date()
         const copy = copyFor(audit.id);
         issues.set(group, {
           ...previous,
-          impact: IMPACT_ORDER[issue.impact] < IMPACT_ORDER[previous.impact] ? issue.impact : previous.impact,
+          priority: Math.max(previous.priority ?? 0, issue.priority ?? 0),
           what: copy ? resolveText(copy.what, ctx) : previous.what,
           elements: elements.length > 0 ? elements : undefined,
         });
@@ -432,11 +461,13 @@ export function buildReport({ slug, url, host, psi, html, createdAt = new Date()
 
   const severityRank: Record<ScoreBand, number> = { bad: 0, warn: 1, good: 2 };
   const categoryRank = Object.fromEntries(CATEGORY_ORDER.map((c, i) => [c, i])) as Record<CategoryKey, number>;
-  const sortedIssues = [...issues.values()].sort(
-    (a, b) =>
-      IMPACT_ORDER[a.impact] - IMPACT_ORDER[b.impact] ||
-      severityRank[a.severity] - severityRank[b.severity] ||
-      categoryRank[a.category] - categoryRank[b.category],
+  const sortedIssues = assignImpact(
+    [...issues.values()].sort(
+      (a, b) =>
+        (b.priority ?? 0) - (a.priority ?? 0) ||
+        severityRank[a.severity] - severityRank[b.severity] ||
+        categoryRank[a.category] - categoryRank[b.category],
+    ),
   );
 
   let score = overallScore(categories);

@@ -35,6 +35,8 @@ export interface ReportIssue {
   title: string;
   severity: ScoreBand;
   impact: Impact;
+  /** 0 a 1, usado so pra ordenar. O selo exibido e `impact`. */
+  priority?: number;
   what: string;
   why: string;
   how: string;

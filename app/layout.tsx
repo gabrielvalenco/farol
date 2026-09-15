@@ -23,11 +23,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: siteUrl(),
   title: {
-    default: "Farol, o raio-x do seu site em 30 segundos",
+    default: "Farol, o raio-x do seu site em menos de um minuto",
     template: "%s, Farol",
   },
   description:
-    "Análise completa de performance, SEO e acessibilidade em menos de 30 segundos. De graça.",
+    "Análise completa de performance, SEO e acessibilidade em menos de um minuto. De graça.",
   openGraph: {
     type: "website",
     locale: "pt_BR",

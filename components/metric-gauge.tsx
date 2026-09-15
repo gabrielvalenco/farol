@@ -10,7 +10,10 @@ import { metricBand, metricPosition, metricSegments, type MetricKey } from "@/li
 import { useMotion } from "@/lib/use-motion";
 import { cn } from "@/lib/utils";
 
-const SEGMENT_COLORS = ["var(--good-soft)", "var(--warn-soft)", "var(--bad-soft)"] as const;
+const SEGMENT_COLORS = ["var(--good-track)", "var(--warn-track)", "var(--bad-track)"] as const;
+
+/** Recuo do pin nas pontas: em 0 ou no fim da escala ele nao cola na borda. */
+const PIN_INSET = 0.02;
 
 /**
  * Core Web Vital (DESIGN.md 6.5 e 5.3 item 5).
@@ -37,7 +40,7 @@ export function MetricGauge({
   const band = metricBand(metric, value);
   const position = metricPosition(metric, value);
   const segments = metricSegments(metric);
-  const target = `${position * 100}%`;
+  const target = `${(PIN_INSET + position * (1 - 2 * PIN_INSET)) * 100}%`;
 
   return (
     <div ref={ref} className={cn("flex min-w-0 flex-col", className)}>
@@ -51,7 +54,7 @@ export function MetricGauge({
 
       {/* A regua e grafica; o valor e o rotulo acima ja dizem tudo em texto. */}
       <div aria-hidden className="relative mt-3 overflow-x-clip py-1">
-        <div className="flex h-1 gap-px overflow-hidden rounded-full">
+        <div className="flex h-1 gap-0.5 overflow-hidden rounded-full">
           {segments.map((width, i) => (
             <span key={i} style={{ flexBasis: `${width * 100}%`, backgroundColor: SEGMENT_COLORS[i] }} />
           ))}

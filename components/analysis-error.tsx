@@ -1,20 +1,34 @@
-import { Clock, PlugZap, TriangleAlert, type LucideIcon } from "lucide-react";
+import { Clock, Hourglass, PlugZap, TriangleAlert, type LucideIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { ANALYSIS_ERRORS, rateLimitMessage } from "@/lib/copy";
 import type { AnalysisErrorCode } from "@/lib/analysis/errors";
+import { ANALYSIS_ERRORS, rateLimitMessage, timeoutError, type ErrorCopy } from "@/lib/copy";
 
 export interface AnalysisFailure {
   code: AnalysisErrorCode;
   retryAfter?: number;
   limit?: number;
   windowMinutes?: number;
+  timeoutSeconds?: number;
 }
 
 const ICONS: Partial<Record<AnalysisErrorCode, LucideIcon>> = {
   unreachable: PlugZap,
   rate_limited: Clock,
+  timeout: Hourglass,
 };
+
+function copyFor(failure: AnalysisFailure): ErrorCopy {
+  if (failure.code === "rate_limited") {
+    return {
+      title: "Muitas análises seguidas",
+      body: rateLimitMessage(failure.limit ?? 5, failure.windowMinutes ?? 10, (failure.retryAfter ?? 60) / 60),
+      action: "Tentar de novo",
+    };
+  }
+  if (failure.code === "timeout") return timeoutError(failure.timeoutSeconds ?? 45);
+  return ANALYSIS_ERRORS[failure.code];
+}
 
 /**
  * Estados de erro da analise (DESIGN.md 7).
@@ -22,15 +36,7 @@ const ICONS: Partial<Record<AnalysisErrorCode, LucideIcon>> = {
  */
 export function AnalysisError({ failure, onRetry }: { failure: AnalysisFailure; onRetry: () => void }) {
   const Icon = ICONS[failure.code] ?? TriangleAlert;
-
-  const copy =
-    failure.code === "rate_limited"
-      ? {
-          title: "Muitas análises seguidas",
-          body: rateLimitMessage(failure.limit ?? 5, failure.windowMinutes ?? 10, (failure.retryAfter ?? 60) / 60),
-          action: "Tentar de novo",
-        }
-      : ANALYSIS_ERRORS[failure.code];
+  const copy = copyFor(failure);
 
   return (
     <div role="alert" className="flex flex-col items-center rounded-lg border border-line bg-surface px-5 py-10 text-center sm:px-10">

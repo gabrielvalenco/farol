@@ -458,6 +458,7 @@
       "title": "Imagens pesadas demais",
       "severity": "bad",
       "impact": "high",
+      "priority": 1,
       "what": "1 imagem está maior do que precisa. Dá pra economizar 1,6 MB.",
       "why": "Imagem pesada é o motivo mais comum de site lento no celular, e ainda gasta o plano de dados de quem visita.",
       "how": "Converta para WebP ou AVIF, reduza para o tamanho que realmente aparece na tela e use loading=\"lazy\" nas imagens abaixo do topo.",
@@ -471,6 +472,7 @@
       "title": "Arquivos atrasam o carregamento",
       "severity": "bad",
       "impact": "high",
+      "priority": 0.7,
       "what": "9 arquivos precisam carregar antes de qualquer coisa aparecer na tela. Dá pra economizar 1,7s.",
       "why": "Enquanto esses arquivos não chegam, a tela fica em branco.",
       "how": "Carregue fontes com display=swap, adie scripts com defer e remova CSS ou bibliotecas que a primeira tela não usa.",
@@ -487,25 +489,34 @@
       ]
     },
     {
-      "id": "redirects",
-      "category": "performance",
-      "title": "O site redireciona antes de abrir",
+      "id": "meta-description",
+      "category": "seo",
+      "title": "Falta o resumo que aparece no Google",
       "severity": "bad",
-      "impact": "high",
-      "what": "O endereço passa por 1 redirecionamento antes da página de verdade. Dá pra economizar 830 ms.",
-      "why": "Cada redirecionamento é mais uma espera antes de qualquer coisa aparecer.",
-      "how": "Faça o endereço principal abrir direto a página final, sem passar por outras URLs no caminho.",
-      "elements": [
-        "https://enfantia.com.br/",
-        "https://enfantia.com.br/login"
-      ]
+      "impact": "medium",
+      "priority": 0.45,
+      "what": "A página não tem descrição, então o Google monta uma com trechos soltos do texto.",
+      "why": "Um resumo claro aumenta a chance de a pessoa clicar no seu site e não no do concorrente.",
+      "how": "Adicione <meta name=\"description\"> com 120 a 155 caracteres dizendo o que você oferece e onde."
+    },
+    {
+      "id": "farol-og-image",
+      "category": "seo",
+      "title": "Seu link aparece sem imagem no WhatsApp",
+      "severity": "warn",
+      "impact": "medium",
+      "priority": 0.4,
+      "what": "A página não define a imagem que aparece quando alguém compartilha o link.",
+      "why": "Link com imagem chama mais atenção no WhatsApp, Instagram e Facebook, e passa mais confiança.",
+      "how": "Adicione <meta property=\"og:image\" content=\"https://seusite.com.br/capa.jpg\"> com uma imagem de 1200x630."
     },
     {
       "id": "color-contrast",
       "category": "accessibility",
       "title": "Texto difícil de ler",
       "severity": "bad",
-      "impact": "high",
+      "impact": "medium",
+      "priority": 0.35,
       "what": "2 textos têm pouco contraste com o fundo.",
       "why": "Texto claro demais some no sol, em tela de celular barata e pra quem enxerga pouco.",
       "how": "Escureça o texto ou o fundo até chegar em contraste de 4,5:1. Botão com texto branco precisa de fundo escuro o bastante.",
@@ -515,21 +526,52 @@
       ]
     },
     {
-      "id": "document-latency-insight",
+      "id": "redirects",
       "category": "performance",
-      "title": "O servidor demora a responder",
+      "title": "O site redireciona antes de abrir",
       "severity": "bad",
       "impact": "medium",
-      "what": "A primeira resposta do servidor está lenta ou sem compressão. Dá pra economizar 240 ms.",
-      "why": "Nada acontece na tela enquanto o servidor não responde.",
-      "how": "Ative compressão (gzip ou brotli), cache de página e evite redirecionamentos na página inicial."
+      "priority": 0.34,
+      "what": "O endereço passa por 1 redirecionamento antes da página de verdade. Dá pra economizar 830 ms.",
+      "why": "Cada redirecionamento é mais uma espera antes de qualquer coisa aparecer.",
+      "how": "Faça o endereço principal abrir direto a página final, sem passar por outras URLs no caminho.",
+      "elements": [
+        "https://enfantia.com.br/",
+        "https://enfantia.com.br/login"
+      ]
+    },
+    {
+      "id": "deprecations",
+      "category": "best-practices",
+      "title": "O site usa recursos que vão deixar de funcionar",
+      "severity": "bad",
+      "impact": "low",
+      "priority": 0.25,
+      "what": "1 recurso obsoleto foi usado.",
+      "why": "Numa atualização do navegador, essa parte do site pode simplesmente parar.",
+      "how": "Atualize as bibliotecas e plugins listados.",
+      "elements": [
+        "https://enfantia.com.br/cdn-cgi/challenge-platform/scripts/jsd/main.js"
+      ]
+    },
+    {
+      "id": "farol-og-text",
+      "category": "seo",
+      "title": "O link compartilhado não tem título e descrição próprios",
+      "severity": "warn",
+      "impact": "low",
+      "priority": 0.15,
+      "what": "Faltam og:title ou og:description, que aparecem junto do link compartilhado.",
+      "why": "Sem eles, cada rede mostra um texto diferente, às vezes cortado ou sem sentido.",
+      "how": "Adicione <meta property=\"og:title\"> e <meta property=\"og:description\"> com o nome e o resumo do negócio."
     },
     {
       "id": "unused-css-rules",
       "category": "performance",
       "title": "Tem CSS sobrando",
       "severity": "bad",
-      "impact": "medium",
+      "impact": "low",
+      "priority": 0.14,
       "what": "3 arquivos de estilo têm regras que a página não usa. Dá pra economizar 48 KB.",
       "why": "O navegador baixa e lê tudo antes de mostrar a página.",
       "how": "Remova frameworks ou versões duplicadas que não usa (ex.: dois Font Awesome) e gere só o CSS das classes usadas.",
@@ -540,37 +582,29 @@
       ]
     },
     {
-      "id": "meta-description",
-      "category": "seo",
-      "title": "Falta o resumo que aparece no Google",
+      "id": "document-latency-insight",
+      "category": "performance",
+      "title": "O servidor demora a responder",
       "severity": "bad",
-      "impact": "medium",
-      "what": "A página não tem descrição, então o Google monta uma com trechos soltos do texto.",
-      "why": "Um resumo claro aumenta a chance de a pessoa clicar no seu site e não no do concorrente.",
-      "how": "Adicione <meta name=\"description\"> com 120 a 155 caracteres dizendo o que você oferece e onde."
+      "impact": "low",
+      "priority": 0.1,
+      "what": "A primeira resposta do servidor está lenta ou sem compressão. Dá pra economizar 240 ms.",
+      "why": "Nada acontece na tela enquanto o servidor não responde.",
+      "how": "Ative compressão (gzip ou brotli), cache de página e evite redirecionamentos na página inicial."
     },
     {
-      "id": "deprecations",
-      "category": "best-practices",
-      "title": "O site usa recursos que vão deixar de funcionar",
+      "id": "unused-javascript",
+      "category": "performance",
+      "title": "Tem JavaScript sobrando",
       "severity": "bad",
-      "impact": "medium",
-      "what": "1 recurso obsoleto foi usado.",
-      "why": "Numa atualização do navegador, essa parte do site pode simplesmente parar.",
-      "how": "Atualize as bibliotecas e plugins listados.",
+      "impact": "low",
+      "priority": 0.08,
+      "what": "1 arquivo de JavaScript tem muito código que a página não usa. Dá pra economizar 20 KB.",
+      "why": "Todo código baixado precisa ser processado pelo celular, mesmo sem uso. Isso deixa a página lenta e travada.",
+      "how": "Remova bibliotecas e scripts que não usa, divida o código por página e carregue ferramentas de terceiros só depois da página abrir.",
       "elements": [
-        "https://enfantia.com.br/cdn-cgi/challenge-platform/scripts/jsd/main.js"
+        "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
       ]
-    },
-    {
-      "id": "farol-og-image",
-      "category": "seo",
-      "title": "Seu link aparece sem imagem no WhatsApp",
-      "severity": "warn",
-      "impact": "medium",
-      "what": "A página não define a imagem que aparece quando alguém compartilha o link.",
-      "why": "Link com imagem chama mais atenção no WhatsApp, Instagram e Facebook, e passa mais confiança.",
-      "how": "Adicione <meta property=\"og:image\" content=\"https://seusite.com.br/capa.jpg\"> com uma imagem de 1200x630."
     },
     {
       "id": "font-display-insight",
@@ -578,6 +612,7 @@
       "title": "Texto invisível enquanto a fonte carrega",
       "severity": "bad",
       "impact": "low",
+      "priority": 0.05,
       "what": "2 fontes escondem o texto até terminar de baixar. Dá pra economizar 40 ms.",
       "why": "A pessoa vê espaço vazio onde deveria ter texto.",
       "how": "Adicione font-display: swap nas fontes (no Google Fonts, &display=swap no endereço).",
@@ -587,24 +622,12 @@
       ]
     },
     {
-      "id": "unused-javascript",
-      "category": "performance",
-      "title": "Tem JavaScript sobrando",
-      "severity": "bad",
-      "impact": "low",
-      "what": "1 arquivo de JavaScript tem muito código que a página não usa. Dá pra economizar 20 KB.",
-      "why": "Todo código baixado precisa ser processado pelo celular, mesmo sem uso. Isso deixa a página lenta e travada.",
-      "how": "Remova bibliotecas e scripts que não usa, divida o código por página e carregue ferramentas de terceiros só depois da página abrir.",
-      "elements": [
-        "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-      ]
-    },
-    {
       "id": "cache-insight",
       "category": "performance",
       "title": "O navegador baixa tudo de novo a cada visita",
       "severity": "warn",
       "impact": "low",
+      "priority": 0.05,
       "what": "2 arquivos não ficam guardados no navegador de quem volta. Dá pra economizar 11 KB.",
       "why": "Quem volta ao site espera tudo carregar de novo, sem necessidade.",
       "how": "Configure cabeçalhos de cache longos (Cache-Control) para imagens, fontes, CSS e JavaScript.",
@@ -619,22 +642,13 @@
       "title": "JavaScript feito para navegadores antigos",
       "severity": "warn",
       "impact": "low",
+      "priority": 0.05,
       "what": "Parte do código ainda é convertida para navegadores que quase ninguém usa mais. Dá pra economizar 11 KB.",
       "why": "É peso extra baixado por todo mundo.",
       "how": "Atualize a configuração de build para navegadores modernos.",
       "elements": [
         "https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495"
       ]
-    },
-    {
-      "id": "farol-og-text",
-      "category": "seo",
-      "title": "O link compartilhado não tem título e descrição próprios",
-      "severity": "warn",
-      "impact": "low",
-      "what": "Faltam og:title ou og:description, que aparecem junto do link compartilhado.",
-      "why": "Sem eles, cada rede mostra um texto diferente, às vezes cortado ou sem sentido.",
-      "how": "Adicione <meta property=\"og:title\"> e <meta property=\"og:description\"> com o nome e o resumo do negócio."
     }
   ],
   "metrics": [

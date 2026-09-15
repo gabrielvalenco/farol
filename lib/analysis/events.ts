@@ -8,6 +8,8 @@ import type { StepKey } from "@/lib/copy";
 import type { AnalysisErrorCode } from "./errors";
 
 export type AnalysisEvent =
+  /** Primeiro evento: o tempo limite real, pro cliente mostrar numeros honestos. */
+  | { type: "start"; timeoutSeconds: number }
   | { type: "step"; key: StepKey; status: "active" | "done" }
   /** O HTML respondeu: ja da pra mostrar titulo e favicon no mockup. */
   | { type: "site"; host: string; title: string | null; favicon: string | null }
@@ -16,7 +18,7 @@ export type AnalysisEvent =
   /** Parte da analise nao pode ser feita; o relatorio sai mesmo assim. */
   | { type: "partial"; section: "seo" }
   | { type: "done"; slug: string; cached?: boolean }
-  | { type: "error"; code: AnalysisErrorCode; retryAfter?: number };
+  | { type: "error"; code: AnalysisErrorCode; retryAfter?: number; timeoutSeconds?: number };
 
 /** Resposta JSON para erros antes do stream (400, 429). */
 export interface AnalysisErrorBody {

@@ -438,6 +438,7 @@
       "title": "Elementos que fazem a página pular",
       "severity": "bad",
       "impact": "high",
+      "priority": 1,
       "what": "1 elemento muda de lugar durante o carregamento.",
       "why": "A pessoa vai tocar num botão e acaba tocando em outro.",
       "how": "Defina largura e altura de imagens e vídeos, reserve espaço para banners e evite textos animados que mudam de tamanho no topo.",
@@ -446,39 +447,12 @@
       ]
     },
     {
-      "id": "render-blocking-insight",
-      "category": "performance",
-      "title": "Arquivos atrasam o carregamento",
-      "severity": "bad",
-      "impact": "high",
-      "what": "2 arquivos precisam carregar antes de qualquer coisa aparecer na tela. Dá pra economizar 1,2s.",
-      "why": "Enquanto esses arquivos não chegam, a tela fica em branco.",
-      "how": "Carregue fontes com display=swap, adie scripts com defer e remova CSS ou bibliotecas que a primeira tela não usa.",
-      "elements": [
-        "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap&font-display=sw…",
-        "https://www.gabrielvalenco.com.br/assets/index-C2h8bP1h.css"
-      ]
-    },
-    {
-      "id": "unused-javascript",
-      "category": "performance",
-      "title": "Tem JavaScript sobrando",
-      "severity": "bad",
-      "impact": "high",
-      "what": "2 arquivos de JavaScript têm muito código que a página não usa. Dá pra economizar 150 KB.",
-      "why": "Todo código baixado precisa ser processado pelo celular, mesmo sem uso. Isso deixa a página lenta e travada.",
-      "how": "Remova bibliotecas e scripts que não usa, divida o código por página e carregue ferramentas de terceiros só depois da página abrir.",
-      "elements": [
-        "https://www.gabrielvalenco.com.br/assets/vendor-three-C9jArSdu.js",
-        "https://www.gabrielvalenco.com.br/assets/vendor-react-BWCVQGRT.js"
-      ]
-    },
-    {
       "id": "bootup-time",
       "category": "performance",
       "title": "O celular gasta muito tempo processando JavaScript",
       "severity": "bad",
       "impact": "high",
+      "priority": 1,
       "what": "O processamento de scripts levou 4,0s.",
       "why": "Enquanto processa, a página não responde.",
       "how": "Remova scripts que não usa e adie os de terceiros (chat, pixels, analytics).",
@@ -491,27 +465,12 @@
       ]
     },
     {
-      "id": "color-contrast",
-      "category": "accessibility",
-      "title": "Texto difícil de ler",
-      "severity": "bad",
-      "impact": "high",
-      "what": "4 textos têm pouco contraste com o fundo.",
-      "why": "Texto claro demais some no sol, em tela de celular barata e pra quem enxerga pouco.",
-      "how": "Escureça o texto ou o fundo até chegar em contraste de 4,5:1. Botão com texto branco precisa de fundo escuro o bastante.",
-      "elements": [
-        "<p class=\"font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500 mb-3\">",
-        "<span class=\"text-zinc-500\">",
-        "<p>",
-        "<p class=\"opacity-70 italic\">"
-      ]
-    },
-    {
       "id": "total-byte-weight",
       "category": "performance",
       "title": "A página pesa demais",
       "severity": "warn",
       "impact": "high",
+      "priority": 1,
       "what": "A página baixa 17,6 MB no total. O ideal é ficar abaixo de 1,6 MB.",
       "why": "No 4G isso significa espera longa e plano de dados gasto.",
       "how": "Comece pelos maiores arquivos: vídeos, imagens grandes e bibliotecas pesadas.",
@@ -529,14 +488,62 @@
       ]
     },
     {
+      "id": "unused-javascript",
+      "category": "performance",
+      "title": "Tem JavaScript sobrando",
+      "severity": "bad",
+      "impact": "medium",
+      "priority": 0.8795233846153846,
+      "what": "2 arquivos de JavaScript têm muito código que a página não usa. Dá pra economizar 150 KB.",
+      "why": "Todo código baixado precisa ser processado pelo celular, mesmo sem uso. Isso deixa a página lenta e travada.",
+      "how": "Remova bibliotecas e scripts que não usa, divida o código por página e carregue ferramentas de terceiros só depois da página abrir.",
+      "elements": [
+        "https://www.gabrielvalenco.com.br/assets/vendor-three-C9jArSdu.js",
+        "https://www.gabrielvalenco.com.br/assets/vendor-react-BWCVQGRT.js"
+      ]
+    },
+    {
+      "id": "render-blocking-insight",
+      "category": "performance",
+      "title": "Arquivos atrasam o carregamento",
+      "severity": "bad",
+      "impact": "medium",
+      "priority": 0.46,
+      "what": "2 arquivos precisam carregar antes de qualquer coisa aparecer na tela. Dá pra economizar 1,2s.",
+      "why": "Enquanto esses arquivos não chegam, a tela fica em branco.",
+      "how": "Carregue fontes com display=swap, adie scripts com defer e remova CSS ou bibliotecas que a primeira tela não usa.",
+      "elements": [
+        "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap&font-display=sw…",
+        "https://www.gabrielvalenco.com.br/assets/index-C2h8bP1h.css"
+      ]
+    },
+    {
       "id": "farol-og-image",
       "category": "seo",
       "title": "Seu link aparece sem imagem no WhatsApp",
       "severity": "warn",
       "impact": "medium",
+      "priority": 0.4,
       "what": "A página não define a imagem que aparece quando alguém compartilha o link.",
       "why": "Link com imagem chama mais atenção no WhatsApp, Instagram e Facebook, e passa mais confiança.",
       "how": "Adicione <meta property=\"og:image\" content=\"https://seusite.com.br/capa.jpg\"> com uma imagem de 1200x630."
+    },
+    {
+      "id": "color-contrast",
+      "category": "accessibility",
+      "title": "Texto difícil de ler",
+      "severity": "bad",
+      "impact": "medium",
+      "priority": 0.35,
+      "what": "4 textos têm pouco contraste com o fundo.",
+      "why": "Texto claro demais some no sol, em tela de celular barata e pra quem enxerga pouco.",
+      "how": "Escureça o texto ou o fundo até chegar em contraste de 4,5:1. Botão com texto branco precisa de fundo escuro o bastante.",
+      "elements": [
+        "<p class=\"font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500 mb-3\">",
+        "<span class=\"text-zinc-500\">",
+        "<p>",
+        "<p class=\"opacity-70 italic\">"
+      ]
     },
     {
       "id": "forced-reflow-insight",
@@ -544,6 +551,7 @@
       "title": "Scripts fazem o navegador recalcular a página",
       "severity": "bad",
       "impact": "low",
+      "priority": 0.15,
       "what": "Alguns scripts leem e alteram o tamanho dos elementos em sequência, forçando o navegador a refazer o layout várias vezes.",
       "why": "Isso trava a página e deixa rolagem e animações engasgando.",
       "how": "Agrupe leituras e escritas de layout, e prefira animar transform e opacity em vez de tamanho e posição.",

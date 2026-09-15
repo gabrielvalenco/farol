@@ -3,13 +3,14 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 import { AnalysisError, type AnalysisFailure } from "@/components/analysis-error";
 import { AnalysisProgress, type StepStatus } from "@/components/analysis-progress";
 import { UrlInput } from "@/components/url-input";
 import type { AnalysisErrorCode } from "@/lib/analysis/errors";
 import { readEvents, type AnalysisErrorBody, type AnalysisEvent } from "@/lib/analysis/events";
-import { ANALYSIS_STEPS, COPY, type StepKey } from "@/lib/copy";
+import { ANALYSIS_PROGRESS_COPY, ANALYSIS_STEPS, COPY, type StepKey } from "@/lib/copy";
 import { normalizeUrl } from "@/lib/url";
 import { useMotion } from "@/lib/use-motion";
 
@@ -28,6 +29,12 @@ const SLICES: Record<StepKey, [number, number]> = {
 const MIN_ACTIVE_MS = 450;
 /** Tempo pra pessoa ver o proprio site no mockup antes de ir pro relatorio. */
 const SCREENSHOT_HOLD_MS = 900;
+/** A partir daqui a analise ja passou do normal e a pessoa merece uma explicacao. */
+const SLOW_NOTICE_MS = 30_000;
+/** Ate o servidor informar o limite real no evento "start". */
+const DEFAULT_TIMEOUT_SECONDS = 45;
+/** Folga alem do corte do servidor antes de o cliente desistir sozinho. */
+const CLIENT_GRACE_MS = 15_000;
 
 type Phase = { kind: "idle" } | { kind: "running" } | { kind: "error"; failure: AnalysisFailure } | { kind: "done" };
 
@@ -39,6 +46,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, Math.
 /**
  * Campo de URL + estado de analise (DESIGN.md 5.1 e 5.2).
  * O campo nao some: o bloco cresce abaixo dele com as etapas reais do stream.
+ * Toda analise tem saida: aviso aos 30s, cancelar a qualquer momento e corte com mensagem.
  */
 export function Analyzer() {
   const router = useRouter();
@@ -50,10 +58,15 @@ export function Analyzer() {
   const [favicon, setFavicon] = useState<string | null>(null);
   const [screenshot, setScreenshot] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
+  const [slow, setSlow] = useState(false);
+  const [timeoutSeconds, setTimeoutSeconds] = useState(DEFAULT_TIMEOUT_SECONDS);
   const [input, setInput] = useState({ key: 0, value: "" });
 
   const runId = useRef(0);
   const abortRef = useRef<AbortController | null>(null);
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const startedAt = useRef(0);
+  const timeoutRef = useRef(DEFAULT_TIMEOUT_SECONDS);
   const activeSince = useRef<Partial<Record<StepKey, number>>>({});
   const stepsRef = useRef(steps);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -62,15 +75,27 @@ export function Analyzer() {
     stepsRef.current = steps;
   }, [steps]);
 
-  // A barra nunca trava: dentro da etapa ativa avanca devagar ate 90% da fatia.
+  const clearTimers = () => {
+    timersRef.current.forEach(clearTimeout);
+    timersRef.current = [];
+  };
+
+  // A barra nunca trava. Na medicao, anda em funcao do tempo limite: chega perto
+  // do fim da fatia so quando o corte esta chegando, entao "parado em 90%" nao existe.
   useEffect(() => {
     if (phase.kind !== "running") return;
     const timer = setInterval(() => {
       const activeKey = STEP_KEYS.find((k) => stepsRef.current[k] === "active");
       if (!activeKey) return;
       const [start, size] = SLICES[activeKey];
-      const elapsed = Date.now() - (activeSince.current[activeKey] ?? Date.now());
-      const fraction = 0.9 * (1 - Math.exp(-elapsed / 6000));
+      let fraction: number;
+      if (activeKey === "performance") {
+        const x = Math.min(1, (Date.now() - startedAt.current) / (timeoutRef.current * 1000));
+        fraction = 0.95 * (1 - (1 - x) * (1 - x));
+      } else {
+        const elapsed = Date.now() - (activeSince.current[activeKey] ?? Date.now());
+        fraction = 0.9 * (1 - Math.exp(-elapsed / 3000));
+      }
       setProgress((p) => Math.max(p, start + size * fraction));
     }, 250);
     return () => clearInterval(timer);
@@ -79,22 +104,43 @@ export function Analyzer() {
   const run = useCallback(
     async (url: string, host: string, force = false) => {
       abortRef.current?.abort();
+      clearTimers();
       const controller = new AbortController();
       abortRef.current = controller;
       const id = ++runId.current;
       const alive = () => runId.current === id;
 
       activeSince.current = {};
+      startedAt.current = Date.now();
+      timeoutRef.current = DEFAULT_TIMEOUT_SECONDS;
       setTarget({ url, host });
       setSteps(pendingSteps());
       setFavicon(null);
       setScreenshot(null);
       setProgress(0);
+      setSlow(false);
+      setTimeoutSeconds(DEFAULT_TIMEOUT_SECONDS);
       setPhase({ kind: "running" });
 
       const fail = (failure: AnalysisFailure) => {
-        if (alive()) setPhase({ kind: "error", failure });
+        if (!alive()) return;
+        clearTimers();
+        runId.current++;
+        controller.abort();
+        setPhase({ kind: "error", failure });
       };
+
+      const armClientTimeout = () => {
+        timersRef.current.push(
+          setTimeout(
+            () => fail({ code: "timeout", timeoutSeconds: timeoutRef.current }),
+            timeoutRef.current * 1000 + CLIENT_GRACE_MS - (Date.now() - startedAt.current),
+          ),
+        );
+      };
+
+      timersRef.current.push(setTimeout(() => alive() && setSlow(true), SLOW_NOTICE_MS));
+      armClientTimeout();
 
       let response: Response;
       try {
@@ -111,7 +157,8 @@ export function Analyzer() {
 
       if (!response.ok || !response.body) {
         const body = (await response.json().catch(() => null)) as AnalysisErrorBody | null;
-        fail(body ?? { code: "internal" });
+        // 503/504 da plataforma sem corpo: foi estouro de tempo, nao erro generico.
+        fail(body ?? { code: response.status === 503 || response.status === 504 ? "timeout" : "internal" });
         return;
       }
 
@@ -123,6 +170,15 @@ export function Analyzer() {
         if (!alive()) return;
 
         switch (event.type) {
+          case "start":
+            timeoutRef.current = event.timeoutSeconds;
+            setTimeoutSeconds(event.timeoutSeconds);
+            clearTimers();
+            timersRef.current.push(
+              setTimeout(() => alive() && setSlow(true), SLOW_NOTICE_MS - (Date.now() - startedAt.current)),
+            );
+            armClientTimeout();
+            break;
           case "step": {
             const [start, size] = SLICES[event.key];
             if (event.status === "active") {
@@ -147,6 +203,8 @@ export function Analyzer() {
             break;
           case "done": {
             finished = true;
+            clearTimers();
+            setSlow(false);
             if (!event.cached) {
               await sleep(screenshotAt ? SCREENSHOT_HOLD_MS - (Date.now() - screenshotAt) : 0);
             }
@@ -158,7 +216,7 @@ export function Analyzer() {
           }
           case "error":
             finished = true;
-            fail({ code: event.code, retryAfter: event.retryAfter });
+            fail({ code: event.code, retryAfter: event.retryAfter, timeoutSeconds: event.timeoutSeconds });
             break;
           case "partial":
             break;
@@ -175,10 +233,20 @@ export function Analyzer() {
         return;
       }
 
-      if (!finished) fail({ code: "internal" });
+      if (!finished && alive()) fail({ code: "internal" });
     },
     [router],
   );
+
+  const cancel = () => {
+    runId.current++;
+    clearTimers();
+    abortRef.current?.abort();
+    setSlow(false);
+    setPhase({ kind: "idle" });
+    toast(ANALYSIS_PROGRESS_COPY.canceled);
+    document.querySelector<HTMLInputElement>("form input[name=url]")?.focus();
+  };
 
   // "Reanalisar" chega como /?url=...&force=1: preenche o campo e ja comeca.
   useEffect(() => {
@@ -192,7 +260,13 @@ export function Analyzer() {
     void run(normalized.url, normalized.host, params.get("force") === "1");
   }, [run]);
 
-  useEffect(() => () => abortRef.current?.abort(), []);
+  useEffect(
+    () => () => {
+      abortRef.current?.abort();
+      clearTimers();
+    },
+    [],
+  );
 
   const busy = phase.kind === "running" || phase.kind === "done";
 
@@ -236,7 +310,10 @@ export function Analyzer() {
               className="overflow-hidden"
             >
               <div className="pt-4">
-                <AnalysisProgress state={{ steps, progress, host: target.host, favicon, screenshot }} />
+                <AnalysisProgress
+                  state={{ steps, progress, host: target.host, favicon, screenshot, slow, timeoutSeconds }}
+                  onCancel={phase.kind === "running" ? cancel : undefined}
+                />
               </div>
             </motion.div>
           ) : phase.kind === "error" ? (

@@ -40,7 +40,7 @@ export function SiteHeader({ compact, watchId }: { compact?: ReactNode; watchId?
     <header
       data-print="hide"
       className={cn(
-        "sticky top-0 z-40 h-14 border-b bg-surface/85 backdrop-blur-sm transition-[border-color] duration-200 ease-out",
+        "sticky top-0 z-40 h-14 border-b bg-surface/92 backdrop-blur-md transition-[border-color] duration-200 ease-out",
         scrolled ? "border-line" : "border-transparent",
       )}
     >

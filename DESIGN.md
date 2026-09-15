@@ -9,7 +9,7 @@
 
 ## 0. O produto em uma frase
 
-**Farol** analisa qualquer site em ~30 segundos e entrega um relatório visual,
+**Farol** analisa qualquer site em menos de um minuto e entrega um relatório visual,
 em português claro, com nota de 0 a 100 e uma lista priorizada do que arrumar.
 
 **Dois públicos, uma interface:**
@@ -62,7 +62,7 @@ dashboard com 40 gradientes.
   (feixe de farol), desenhado em SVG com `stroke-width: 1.75`, `stroke-linecap: round`.
   Arco interno em `--accent`, arco externo em `--accent` com `opacity: 0.35`.
   Sem preenchimento. O mark nunca aparece sozinho fora do favicon.
-- **Tagline:** "O raio-x do seu site em 30 segundos."
+- **Tagline:** "O raio-x do seu site em menos de um minuto."
 - **Tom de voz:** direto, sem hype, sem gerundismo. Fala o problema e o custo do
   problema. "Seu site demora 4,2s pra carregar. Metade dos visitantes desiste antes disso."
 
@@ -162,7 +162,7 @@ Mobile: `display` cai para 48, `h1` para 32, `h2` para 24. Use `clamp()`.
 - Grid: 12 colunas, gap 24px. No mobile, coluna única, gap 16px.
 - Ritmo vertical entre seções: 80px no desktop, 56px no mobile.
 - **Header:** 56px de altura, `position: sticky`, fundo `--bg` com
-  `backdrop-filter: blur(8px)` e `background: rgba(255,255,255,0.85)`,
+  `backdrop-filter: blur(12px)` e `background: rgba(255,255,255,0.92)` (revisado: 0.85 deixava o conteúdo legível por trás),
   borda inferior de 1px que **só aparece depois de 8px de scroll**
   (transição de 200ms na `border-color`). Esse detalhe sozinho já eleva o nível.
 
@@ -255,7 +255,7 @@ Uma tela, uma ação. Nada de seção de "features" com três ícones.
 2. **Hero centralizado**, começando a ~18vh do topo:
    - `h1`: "Descubra o que está travando o seu site."
    - Subtítulo em `body` / `--ink-500`, max 520px: "Análise completa de performance,
-     SEO e acessibilidade em menos de 30 segundos. De graça."
+     SEO e acessibilidade em menos de um minuto. De graça."
    - **O campo de URL é o protagonista.** Ver 6.1.
    - Abaixo, em `label` / `--ink-400`: "Sem cadastro. Sem cartão."
 3. **Prova social discreta:** uma linha com 3 ou 4 domínios já analisados
@@ -270,7 +270,7 @@ Os 4 itens entram com `stagger` no `whileInView`.
 
 ### 5.2 Estado de análise (o momento mais importante do produto)
 
-A PSI leva de 10 a 30 segundos. Esse tempo é oportunidade, não problema:
+A PSI leva de 30 a 60 segundos, às vezes mais. Esse tempo é oportunidade, não problema:
 é onde o produto parece competente. **Não use um spinner.**
 
 **Comportamento:** ao dar submit, o campo de URL **não some**. Ele se transforma:
@@ -659,3 +659,17 @@ e como foi resolvido. Toda entrada segue os Princípios da seção 1.
 - **Imagem de OG** usa `next/og`, que é o `@vercel/og` empacotado no Next. As cores vêm de `lib/tokens.ts`,
   espelho em hex de `globals.css`.
 - **Links do header.** "Como funciona" leva à seção "O que você recebe"; "Ver exemplo" abre `/r/exemplo-gabrielvalenco`.
+
+
+### 14.5 Revisão pós-lançamento
+
+- **Tempo limite da análise: 45s** (`ANALYSIS_TIMEOUT_SECONDS`, máximo 50). A PageSpeed pode passar de 100s em sites pesados,
+  o que estourava o limite da função (503) e deixava a pessoa sem saída. Com o corte, a mensagem é
+  "Esse site demorou demais pra medir". Aos 30s aparece um aviso de que o site está demorando mais que o normal.
+  O botão "Cancelar análise" fica visível durante toda a medição. A barra anda em função do tempo limite e nunca para.
+- **Promessa da home:** "em menos de 30 segundos" virou "em menos de um minuto", porque as medições reais levam de 30 a 60s.
+- **Régua de impacto:** cada problema recebe uma prioridade de 0 a 1 (economia de tempo e bytes, estrago em CLS e TBT,
+  peso da verificação × urgência da categoria). "Alto" a partir de 0,6, "Médio" a partir de 0,3,
+  com **no máximo 3 "Alto impacto" por relatório**. Antes, os 5 primeiros cards saíam todos como alto.
+- **Réguas das métricas:** os trilhos usam `--good-track`, `--warn-track` e `--bad-track` (a cor da faixa a 55% sobre branco),
+  e o pin tem recuo de 2% nas pontas, para não colar na borda.

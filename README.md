@@ -1,6 +1,6 @@
 # Farol
 
-O raio-x do seu site em 30 segundos. Cole um endereço e receba um relatório visual, em português claro, com nota de 0 a 100 e a lista do que arrumar primeiro.
+O raio-x do seu site em menos de um minuto. Cole um endereço e receba um relatório visual, em português claro, com nota de 0 a 100 e a lista do que arrumar primeiro.
 
 Toda decisão visual está no [DESIGN.md](DESIGN.md). Leia antes de mexer em qualquer tela.
 

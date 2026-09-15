@@ -20,8 +20,12 @@ import { normalizeUrl } from "@/lib/url";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-/** A PSI leva de 10 a 30s, e ate ~110s em site pesado (limite em lib/analysis/psi.ts). */
-export const maxDuration = 120;
+/**
+ * A analise e cortada em env.analysisTimeoutSeconds (45s por padrao). 60s cobre
+ * o corte e o salvamento, e cabe no limite de funcao da Vercel em qualquer plano.
+ * Sem corte, site pesado passava de 100s e a funcao estourava (503).
+ */
+export const maxDuration = 60;
 
 type Settled<T> = { ok: true; value: T } | { ok: false; error: AnalysisError };
 
@@ -98,11 +102,15 @@ export async function POST(request: Request): Promise<Response> {
         }
       };
 
+      const timeoutSeconds = env.analysisTimeoutSeconds;
+      const deadline = Date.now() + timeoutSeconds * 1000;
+
       try {
+        send({ type: "start", timeoutSeconds });
         send({ type: "step", key: "fetch", status: "active" });
 
         // PSI e HTML em paralelo: a PSI e o gargalo, o HTML chega em ~1s.
-        const psiPromise = settle(runPageSpeed(url, { signal: abort.signal }));
+        const psiPromise = settle(runPageSpeed(url, { signal: abort.signal, timeoutMs: deadline - Date.now() }));
         const html = await settle<HtmlFacts>(fetchHtmlFacts(url));
 
         if (html.ok) {
@@ -127,7 +135,7 @@ export async function POST(request: Request): Promise<Response> {
                 ? "unreachable"
                 : psi.error.code;
           console.error("[farol] analise falhou", { url, psi: psi.error.message, html: html.ok ? "ok" : html.error.message });
-          send({ type: "error", code });
+          send({ type: "error", code, timeoutSeconds: code === "timeout" ? timeoutSeconds : undefined });
           return finish();
         }
 

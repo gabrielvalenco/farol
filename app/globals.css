@@ -42,6 +42,12 @@
   --warn-ink: #9a5800; /* 5.57 no branco, 5.10 no warn-soft */
   --bad-ink: #c4302e; /* 5.51 no branco, 4.86 no bad-soft */
 
+  /* Trilho da regua do MetricGauge: a cor da faixa a 55% sobre branco.
+     Os -soft sumiam no fundo e a escala nao era legivel. */
+  --good-track: #7acaaf;
+  --warn-track: #eabf73;
+  --bad-track: #ee9795;
+
   /* --- 3.3 Raio ------------------------------------------ */
   --r-sm: 8px;
   --r-md: 12px;

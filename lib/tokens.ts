@@ -19,5 +19,8 @@ export const TOKENS = {
   warn: "#D98A00",
   warnInk: "#9A5800",
   bad: "#E0413F",
+  goodTrack: "#7ACAAF",
+  warnTrack: "#EABF73",
+  badTrack: "#EE9795",
   badInk: "#C4302E",
 } as const;

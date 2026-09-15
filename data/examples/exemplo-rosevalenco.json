@@ -466,75 +466,12 @@
   },
   "issues": [
     {
-      "id": "cls-culprits-insight",
-      "category": "performance",
-      "title": "Elementos que fazem a página pular",
-      "severity": "bad",
-      "impact": "high",
-      "what": "2 elementos mudam de lugar durante o carregamento.",
-      "why": "A pessoa vai tocar num botão e acaba tocando em outro.",
-      "how": "Defina largura e altura de imagens e vídeos, reserve espaço para banners e evite textos animados que mudam de tamanho no topo.",
-      "elements": [
-        "<div class=\"relative z-10 container mx-auto px-4 pt-20 pb-12\">",
-        "<span class=\"animate-pulse text-blue-300\">"
-      ]
-    },
-    {
-      "id": "unused-javascript",
-      "category": "performance",
-      "title": "Tem JavaScript sobrando",
-      "severity": "bad",
-      "impact": "high",
-      "what": "7 arquivos de JavaScript têm muito código que a página não usa. Dá pra economizar 302 KB.",
-      "why": "Todo código baixado precisa ser processado pelo celular, mesmo sem uso. Isso deixa a página lenta e travada.",
-      "how": "Remova bibliotecas e scripts que não usa, divida o código por página e carregue ferramentas de terceiros só depois da página abrir.",
-      "elements": [
-        "https://www.googletagmanager.com/gtag/js?id=G-6DL274TJWK",
-        "https://www.googletagmanager.com/gtag/js?id=AW-18071000213&cx=c&gtm=4e69b1",
-        "https://rosevalenco.com.br/_next/static/chunks/08svf9h_v368k.js",
-        "https://connect.facebook.net/en_US/fbevents.js",
-        "https://connect.facebook.net/signals/config/2369328496903692?v=2.9.400&r=stable&domain=rosevalenco.com.br&im=…",
-        "https://rosevalenco.com.br/_next/static/chunks/0~bqtg3ar3p8g.js",
-        "https://rosevalenco.com.br/_next/static/chunks/0a3pg.k92a8rq.js"
-      ]
-    },
-    {
-      "id": "button-name",
-      "category": "accessibility",
-      "title": "Botões sem nome",
-      "severity": "bad",
-      "impact": "high",
-      "what": "4 botões não têm nome que um leitor de tela consiga anunciar.",
-      "why": "Quem usa leitor de tela ouve só \"botão\", sem saber o que ele faz.",
-      "how": "Coloque texto no botão ou um aria-label dizendo a ação.",
-      "elements": [
-        "<button type=\"button\" role=\"combobox\" aria-controls=\"radix-_R_4hlfknpb_\" aria-expanded=\"false\" aria-autocompl…",
-        "<button type=\"button\" role=\"combobox\" aria-controls=\"radix-_R_4plfknpb_\" aria-expanded=\"false\" aria-autocompl…",
-        "<button type=\"button\" role=\"combobox\" aria-controls=\"radix-_R_51lfknpb_\" aria-expanded=\"false\" aria-autocompl…",
-        "<button type=\"button\" role=\"combobox\" aria-controls=\"radix-_R_59lfknpb_\" aria-expanded=\"false\" aria-autocompl…"
-      ]
-    },
-    {
-      "id": "color-contrast",
-      "category": "accessibility",
-      "title": "Texto difícil de ler",
-      "severity": "bad",
-      "impact": "high",
-      "what": "3 textos têm pouco contraste com o fundo.",
-      "why": "Texto claro demais some no sol, em tela de celular barata e pra quem enxerga pouco.",
-      "how": "Escureça o texto ou o fundo até chegar em contraste de 4,5:1. Botão com texto branco precisa de fundo escuro o bastante.",
-      "elements": [
-        "<a href=\"https://wa.me/5518997125210?text=Ol%C3%A1!%20Gostaria%20de%20encontrar%20u…\" target=\"_blank\" rel=\"no…",
-        "<p class=\"text-sm font-semibold text-[#25D366] uppercase tracking-widest mb-1\">",
-        "<p class=\"text-sm text-gray-500 leading-relaxed\">"
-      ]
-    },
-    {
       "id": "farol-broken-resources",
       "category": "best-practices",
       "title": "Arquivos do seu site não estão carregando",
       "severity": "bad",
       "impact": "high",
+      "priority": 0.95,
       "what": "100 arquivos falharam ao carregar (imagens, scripts ou dados), quase todos vindos de cllookhlreexacjzlekx.supabase.co.",
       "why": "Quem visita vê imagem quebrada ou pedaço da página faltando. Passa descuido, e o que não carrega também não conta pro Google.",
       "how": "Confira se o serviço em cllookhlreexacjzlekx.supabase.co está ativo. Armazenamento em nuvem pausado, domínio expirado ou arquivo apagado são as causas mais comuns.",
@@ -642,11 +579,105 @@
       ]
     },
     {
+      "id": "cls-culprits-insight",
+      "category": "performance",
+      "title": "Elementos que fazem a página pular",
+      "severity": "bad",
+      "impact": "high",
+      "priority": 0.7524169799534446,
+      "what": "2 elementos mudam de lugar durante o carregamento.",
+      "why": "A pessoa vai tocar num botão e acaba tocando em outro.",
+      "how": "Defina largura e altura de imagens e vídeos, reserve espaço para banners e evite textos animados que mudam de tamanho no topo.",
+      "elements": [
+        "<div class=\"relative z-10 container mx-auto px-4 pt-20 pb-12\">",
+        "<span class=\"animate-pulse text-blue-300\">"
+      ]
+    },
+    {
+      "id": "button-name",
+      "category": "accessibility",
+      "title": "Botões sem nome",
+      "severity": "bad",
+      "impact": "medium",
+      "priority": 0.5,
+      "what": "4 botões não têm nome que um leitor de tela consiga anunciar.",
+      "why": "Quem usa leitor de tela ouve só \"botão\", sem saber o que ele faz.",
+      "how": "Coloque texto no botão ou um aria-label dizendo a ação.",
+      "elements": [
+        "<button type=\"button\" role=\"combobox\" aria-controls=\"radix-_R_4hlfknpb_\" aria-expanded=\"false\" aria-autocompl…",
+        "<button type=\"button\" role=\"combobox\" aria-controls=\"radix-_R_4plfknpb_\" aria-expanded=\"false\" aria-autocompl…",
+        "<button type=\"button\" role=\"combobox\" aria-controls=\"radix-_R_51lfknpb_\" aria-expanded=\"false\" aria-autocompl…",
+        "<button type=\"button\" role=\"combobox\" aria-controls=\"radix-_R_59lfknpb_\" aria-expanded=\"false\" aria-autocompl…"
+      ]
+    },
+    {
+      "id": "unused-javascript",
+      "category": "performance",
+      "title": "Tem JavaScript sobrando",
+      "severity": "bad",
+      "impact": "medium",
+      "priority": 0.42,
+      "what": "7 arquivos de JavaScript têm muito código que a página não usa. Dá pra economizar 302 KB.",
+      "why": "Todo código baixado precisa ser processado pelo celular, mesmo sem uso. Isso deixa a página lenta e travada.",
+      "how": "Remova bibliotecas e scripts que não usa, divida o código por página e carregue ferramentas de terceiros só depois da página abrir.",
+      "elements": [
+        "https://www.googletagmanager.com/gtag/js?id=G-6DL274TJWK",
+        "https://www.googletagmanager.com/gtag/js?id=AW-18071000213&cx=c&gtm=4e69b1",
+        "https://rosevalenco.com.br/_next/static/chunks/08svf9h_v368k.js",
+        "https://connect.facebook.net/en_US/fbevents.js",
+        "https://connect.facebook.net/signals/config/2369328496903692?v=2.9.400&r=stable&domain=rosevalenco.com.br&im=…",
+        "https://rosevalenco.com.br/_next/static/chunks/0~bqtg3ar3p8g.js",
+        "https://rosevalenco.com.br/_next/static/chunks/0a3pg.k92a8rq.js"
+      ]
+    },
+    {
+      "id": "farol-og-image",
+      "category": "seo",
+      "title": "Seu link aparece sem imagem no WhatsApp",
+      "severity": "warn",
+      "impact": "medium",
+      "priority": 0.4,
+      "what": "A página não define a imagem que aparece quando alguém compartilha o link.",
+      "why": "Link com imagem chama mais atenção no WhatsApp, Instagram e Facebook, e passa mais confiança.",
+      "how": "Adicione <meta property=\"og:image\" content=\"https://seusite.com.br/capa.jpg\"> com uma imagem de 1200x630."
+    },
+    {
+      "id": "color-contrast",
+      "category": "accessibility",
+      "title": "Texto difícil de ler",
+      "severity": "bad",
+      "impact": "medium",
+      "priority": 0.35,
+      "what": "3 textos têm pouco contraste com o fundo.",
+      "why": "Texto claro demais some no sol, em tela de celular barata e pra quem enxerga pouco.",
+      "how": "Escureça o texto ou o fundo até chegar em contraste de 4,5:1. Botão com texto branco precisa de fundo escuro o bastante.",
+      "elements": [
+        "<a href=\"https://wa.me/5518997125210?text=Ol%C3%A1!%20Gostaria%20de%20encontrar%20u…\" target=\"_blank\" rel=\"no…",
+        "<p class=\"text-sm font-semibold text-[#25D366] uppercase tracking-widest mb-1\">",
+        "<p class=\"text-sm text-gray-500 leading-relaxed\">"
+      ]
+    },
+    {
+      "id": "image-delivery-insight",
+      "category": "performance",
+      "title": "Imagens pesadas demais",
+      "severity": "bad",
+      "impact": "low",
+      "priority": 0.24,
+      "what": "1 imagem está maior do que precisa. Dá pra economizar 63 KB.",
+      "why": "Imagem pesada é o motivo mais comum de site lento no celular, e ainda gasta o plano de dados de quem visita.",
+      "how": "Converta para WebP ou AVIF, reduza para o tamanho que realmente aparece na tela e use loading=\"lazy\" nas imagens abaixo do topo.",
+      "elements": [
+        "<img src=\"/logo.png\" alt=\"Logo\" class=\"w-full h-full object-cover\">"
+      ]
+    },
+    {
       "id": "cache-insight",
       "category": "performance",
       "title": "O navegador baixa tudo de novo a cada visita",
       "severity": "bad",
-      "impact": "medium",
+      "impact": "low",
+      "priority": 0.18,
       "what": "6 arquivos não ficam guardados no navegador de quem volta. Dá pra economizar 219 KB.",
       "why": "Quem volta ao site espera tudo carregar de novo, sem necessidade.",
       "how": "Configure cabeçalhos de cache longos (Cache-Control) para imagens, fontes, CSS e JavaScript.",
@@ -660,31 +691,34 @@
       ]
     },
     {
-      "id": "image-delivery-insight",
+      "id": "forced-reflow-insight",
       "category": "performance",
-      "title": "Imagens pesadas demais",
+      "title": "Scripts fazem o navegador recalcular a página",
       "severity": "bad",
-      "impact": "medium",
-      "what": "1 imagem está maior do que precisa. Dá pra economizar 63 KB.",
-      "why": "Imagem pesada é o motivo mais comum de site lento no celular, e ainda gasta o plano de dados de quem visita.",
-      "how": "Converta para WebP ou AVIF, reduza para o tamanho que realmente aparece na tela e use loading=\"lazy\" nas imagens abaixo do topo.",
+      "impact": "low",
+      "priority": 0.15,
+      "what": "Alguns scripts leem e alteram o tamanho dos elementos em sequência, forçando o navegador a refazer o layout várias vezes.",
+      "why": "Isso trava a página e deixa rolagem e animações engasgando.",
+      "how": "Agrupe leituras e escritas de layout, e prefira animar transform e opacity em vez de tamanho e posição.",
       "elements": [
-        "<img src=\"/logo.png\" alt=\"Logo\" class=\"w-full h-full object-cover\">"
+        "https://rosevalenco.com.br/_next/static/chunks/0a3pg.k92a8rq.js",
+        "https://rosevalenco.com.br/_next/static/chunks/003n0vu71oz8y.js",
+        "https://rosevalenco.com.br/_next/static/chunks/0jj_v49jcsdmx.js"
       ]
     },
     {
-      "id": "legacy-javascript-insight",
-      "category": "performance",
-      "title": "JavaScript feito para navegadores antigos",
+      "id": "third-party-cookies",
+      "category": "best-practices",
+      "title": "O site depende de cookies de terceiros",
       "severity": "bad",
-      "impact": "medium",
-      "what": "Parte do código ainda é convertida para navegadores que quase ninguém usa mais. Dá pra economizar 37 KB.",
-      "why": "É peso extra baixado por todo mundo.",
-      "how": "Atualize a configuração de build para navegadores modernos.",
+      "impact": "low",
+      "priority": 0.15,
+      "what": "2 cookies de terceiros foram encontrados.",
+      "why": "Os navegadores estão bloqueando esses cookies, então rastreamento e anúncios podem parar de funcionar.",
+      "how": "Confira se as ferramentas de anúncio e análise estão atualizadas e configuradas no seu próprio domínio.",
       "elements": [
-        "https://rosevalenco.com.br/_next/static/chunks/0a3pg.k92a8rq.js",
-        "https://connect.facebook.net/en_US/fbevents.js",
-        "https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495"
+        "https://googleads.g.doubleclick.net/pagead/viewthroughconversion/18071000213/?random=1789499939340&cv=11&fst=…",
+        "https://www.facebook.com/tr/?id=2369328496903692&ev=PageView&dl=https%3A%2F%2Frosevalenco.com.br%2F&rl=&if=fa…"
       ]
     },
     {
@@ -692,7 +726,8 @@
       "category": "performance",
       "title": "O celular gasta muito tempo processando JavaScript",
       "severity": "bad",
-      "impact": "medium",
+      "impact": "low",
+      "priority": 0.08653846153846013,
       "what": "O processamento de scripts levou 5,4s.",
       "why": "Enquanto processa, a página não responde.",
       "how": "Remova scripts que não usa e adie os de terceiros (chat, pixels, analytics).",
@@ -710,28 +745,19 @@
       ]
     },
     {
-      "id": "farol-og-image",
-      "category": "seo",
-      "title": "Seu link aparece sem imagem no WhatsApp",
-      "severity": "warn",
-      "impact": "medium",
-      "what": "A página não define a imagem que aparece quando alguém compartilha o link.",
-      "why": "Link com imagem chama mais atenção no WhatsApp, Instagram e Facebook, e passa mais confiança.",
-      "how": "Adicione <meta property=\"og:image\" content=\"https://seusite.com.br/capa.jpg\"> com uma imagem de 1200x630."
-    },
-    {
-      "id": "forced-reflow-insight",
+      "id": "legacy-javascript-insight",
       "category": "performance",
-      "title": "Scripts fazem o navegador recalcular a página",
+      "title": "JavaScript feito para navegadores antigos",
       "severity": "bad",
       "impact": "low",
-      "what": "Alguns scripts leem e alteram o tamanho dos elementos em sequência, forçando o navegador a refazer o layout várias vezes.",
-      "why": "Isso trava a página e deixa rolagem e animações engasgando.",
-      "how": "Agrupe leituras e escritas de layout, e prefira animar transform e opacity em vez de tamanho e posição.",
+      "priority": 0.06,
+      "what": "Parte do código ainda é convertida para navegadores que quase ninguém usa mais. Dá pra economizar 37 KB.",
+      "why": "É peso extra baixado por todo mundo.",
+      "how": "Atualize a configuração de build para navegadores modernos.",
       "elements": [
         "https://rosevalenco.com.br/_next/static/chunks/0a3pg.k92a8rq.js",
-        "https://rosevalenco.com.br/_next/static/chunks/003n0vu71oz8y.js",
-        "https://rosevalenco.com.br/_next/static/chunks/0jj_v49jcsdmx.js"
+        "https://connect.facebook.net/en_US/fbevents.js",
+        "https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495"
       ]
     },
     {
@@ -740,6 +766,7 @@
       "title": "Arquivos atrasam o carregamento",
       "severity": "bad",
       "impact": "low",
+      "priority": 0.06,
       "what": "1 arquivo precisa carregar antes de qualquer coisa aparecer na tela. Dá pra economizar 150 ms.",
       "why": "Enquanto esses arquivos não chegam, a tela fica em branco.",
       "how": "Carregue fontes com display=swap, adie scripts com defer e remova CSS ou bibliotecas que a primeira tela não usa.",
@@ -748,25 +775,12 @@
       ]
     },
     {
-      "id": "third-party-cookies",
-      "category": "best-practices",
-      "title": "O site depende de cookies de terceiros",
-      "severity": "bad",
-      "impact": "low",
-      "what": "2 cookies de terceiros foram encontrados.",
-      "why": "Os navegadores estão bloqueando esses cookies, então rastreamento e anúncios podem parar de funcionar.",
-      "how": "Confira se as ferramentas de anúncio e análise estão atualizadas e configuradas no seu próprio domínio.",
-      "elements": [
-        "https://googleads.g.doubleclick.net/pagead/viewthroughconversion/18071000213/?random=1789499939340&cv=11&fst=…",
-        "https://www.facebook.com/tr/?id=2369328496903692&ev=PageView&dl=https%3A%2F%2Frosevalenco.com.br%2F&rl=&if=fa…"
-      ]
-    },
-    {
       "id": "errors-in-console",
       "category": "best-practices",
       "title": "O navegador registra erros na página",
       "severity": "bad",
       "impact": "low",
+      "priority": 0.05,
       "what": "1 erro apareceu no console do navegador.",
       "why": "Erro costuma significar algo que não funcionou: imagem, formulário ou script quebrado.",
       "how": "Abra o site com as ferramentas de desenvolvedor (F12), aba Console, e corrija os erros da lista.",
