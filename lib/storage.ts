@@ -4,7 +4,8 @@
  * - Com `DATABASE_URL`: Postgres (Neon ou Supabase). A tabela e criada sozinha
  *   na primeira escrita; o SQL tambem esta em `db/schema.sql`.
  * - Sem `DATABASE_URL`, localmente: arquivos JSON em `.data/reports/`.
- * - Relatorios de exemplo (`data/examples/`) sao sempre lidos do repositorio.
+ * - Relatorios versionados (`data/examples/`, usados pelos casos de antes e depois)
+ *   sao sempre lidos do repositorio.
  */
 
 import "server-only";

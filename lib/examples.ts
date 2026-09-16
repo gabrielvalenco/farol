@@ -1,16 +1,12 @@
 /**
- * Relatorios de exemplo versionados em `data/examples/`.
- * Alimentam o link "Ver exemplo" e a linha de sites ja analisados (5.1).
+ * Conteudo de vitrine da landing e do header.
  */
 
-export const EXAMPLES = [
-  { host: "enfantia.com.br", slug: "exemplo-enfantia" },
-  { host: "gabrielvalenco.com.br", slug: "exemplo-gabrielvalenco" },
-  { host: "rosevalenco.com.br", slug: "exemplo-rosevalenco" },
-] as const;
+/** Sites ja analisados, na linha discreta abaixo do campo (DESIGN.md 5.1). So texto. */
+export const ANALYZED_HOSTS = ["enfantia.com.br", "gabrielvalenco.com.br", "rosevalenco.com.br"] as const;
 
-/** Caso de antes e depois em destaque (data/cases/). Usado no header e na landing. */
+/**
+ * Caso de antes e depois que o Farol usa como exemplo (data/cases/).
+ * E o destino de "Ver exemplo" no header e do card da landing.
+ */
 export const FEATURED_CASE = "gabrielvalenco";
-
-/** O exemplo que o header abre em "Ver exemplo". */
-export const FEATURED_EXAMPLE = EXAMPLES[1];

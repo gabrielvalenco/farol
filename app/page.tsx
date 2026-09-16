@@ -4,7 +4,7 @@ import { FeatureGrid } from "@/components/feature-grid";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { COPY } from "@/lib/copy";
-import { EXAMPLES, FEATURED_CASE } from "@/lib/examples";
+import { ANALYZED_HOSTS, FEATURED_CASE } from "@/lib/examples";
 
 /** Landing (DESIGN.md 5.1): uma tela, uma acao. */
 export default function Home() {
@@ -25,17 +25,17 @@ export default function Home() {
 
             <p className="mt-8 font-mono text-label font-normal text-ink-500">
               <span className="sr-only">Sites já analisados: </span>
-              {EXAMPLES.map((example, i) => (
-                <span key={example.host}>
+              {ANALYZED_HOSTS.map((host, i) => (
+                <span key={host}>
                   {i > 0 ? <span aria-hidden> · </span> : null}
-                  {example.host}
+                  {host}
                 </span>
               ))}
             </p>
           </div>
         </section>
 
-        <section aria-label="Caso real" className="container-page">
+        <section aria-label="Exemplo real" className="container-page">
           <CaseTeaser slug={FEATURED_CASE} />
         </section>
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 
 import { Wordmark } from "@/components/brand";
-import { FEATURED_CASE, FEATURED_EXAMPLE } from "@/lib/examples";
+import { FEATURED_CASE } from "@/lib/examples";
 import { cn } from "@/lib/utils";
 
 /**
@@ -56,11 +56,8 @@ export function SiteHeader({ compact, watchId }: { compact?: ReactNode; watchId?
             )}
             aria-hidden={compact && showCompact ? true : undefined}
           >
-            <HeaderLink href="/#como-funciona" className="max-sm:hidden">
-              Como funciona
-            </HeaderLink>
-            <HeaderLink href={`/casos/${FEATURED_CASE}`}>Antes e depois</HeaderLink>
-            <HeaderLink href={`/r/${FEATURED_EXAMPLE.slug}`}>Ver exemplo</HeaderLink>
+            <HeaderLink href="/#como-funciona">Como funciona</HeaderLink>
+            <HeaderLink href={`/casos/${FEATURED_CASE}`}>Ver exemplo</HeaderLink>
           </nav>
 
           {compact ? (

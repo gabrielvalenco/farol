@@ -360,7 +360,7 @@ depoimento ou adjetivo.
 
 **Ordem de leitura:**
 
-1. **Hero centralizado:** `label` "Antes e depois · domínio", `h1` com os dois números
+1. **Hero centralizado:** `label` "Exemplo · antes e depois · domínio", `h1` com os dois números
    ("De 60 para 96, com o mesmo visual") e uma linha de impacto. Abaixo, dois
    `ScoreRing` lado a lado com uma seta e o chip "+N pontos". O anel de depois
    começa a desenhar 500ms depois do de antes.
@@ -695,7 +695,7 @@ e como foi resolvido. Toda entrada segue os Princípios da seção 1.
 - **Relatórios não são indexados** (`noindex`): são compartilhados por link.
 - **Imagem de OG** usa `next/og`, que é o `@vercel/og` empacotado no Next. As cores vêm de `lib/tokens.ts`,
   espelho em hex de `globals.css`.
-- **Links do header.** "Como funciona" leva à seção "O que você recebe"; "Ver exemplo" abre `/r/exemplo-gabrielvalenco`.
+- **Links do header.** "Como funciona" leva à seção "O que você recebe"; "Ver exemplo" abre o caso de antes e depois (`/casos/gabrielvalenco`). Os relatórios de exemplo avulsos saíram, e `/r/exemplo-*` redireciona para o caso.
 
 
 ### 14.5 Revisão pós-lançamento

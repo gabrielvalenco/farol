@@ -370,7 +370,7 @@ export function formatRatio(ratio: number): string {
 }
 
 export const CASE_COPY = {
-  eyebrow: "Antes e depois",
+  eyebrow: "Exemplo · antes e depois",
   title: (before: number, after: number) => `De ${before} para ${after}, com o mesmo visual`,
   subtitle: (host: string, speedup: string) =>
     `O ${host} ficou ${speedup} mais rápido pra mostrar o conteúdo no celular, sem perder o vídeo, o 3D e as animações. Tudo abaixo foi medido, não estimado.`,
@@ -410,7 +410,7 @@ export const CASE_COPY = {
     analyze: "Analisar meu site",
   },
   teaser: {
-    eyebrow: "Caso real",
+    eyebrow: "Exemplo real",
     title: (before: number, after: number) => `De ${before} para ${after} sem mudar o visual`,
     action: "Ver o antes e depois",
   },

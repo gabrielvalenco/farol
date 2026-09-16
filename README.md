@@ -22,7 +22,7 @@ Abra http://localhost:3000. Sem nenhuma variável de ambiente o Farol já funcio
 
 Copie `.env.example` para `.env.local` e preencha o que tiver.
 
-Três relatórios reais de exemplo ficam em `data/examples/` e abrem sem configuração nenhuma, por exemplo em `/r/exemplo-gabrielvalenco`. Os componentes base ficam em `/dev/components` (só em desenvolvimento).
+O exemplo do produto é um caso real de antes e depois, em `/casos/gabrielvalenco` ("Ver exemplo" no header). Ele abre sem configuração nenhuma: os dados ficam em `data/cases/` e os dois relatórios em `data/examples/`. Para criar outro caso, use `npm run case:build` (instruções em `scripts/build-case.ts`). Os componentes base ficam em `/dev/components` (só em desenvolvimento).
 
 ## Como a análise funciona
 

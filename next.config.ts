@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  /** Os relatorios de exemplo sairam: links antigos levam ao exemplo de antes e depois. */
+  async redirects() {
+    return [{ source: "/r/exemplo-:site", destination: "/casos/gabrielvalenco", permanent: true }];
+  },
+
   /**
    * Arquivos lidos do disco em tempo de execucao (fs.readFile com caminho montado).
    * O rastreamento automatico da Vercel nao enxerga esses caminhos, entao sem isto
