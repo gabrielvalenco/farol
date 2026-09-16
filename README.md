@@ -47,7 +47,7 @@ Se o HTML falhar e a PageSpeed responder, o relatório sai marcado como análise
    - `NEXT_PUBLIC_SITE_URL` com o domínio final e, se quiser o botão de conversão, `NEXT_PUBLIC_WHATSAPP_NUMBER`.
 4. Faça o deploy.
 
-A rota de análise pede até 120 segundos de execução (`maxDuration`), coberto pelo plano gratuito da Vercel com Fluid Compute. Sites muito pesados podem levar a PageSpeed a desistir; nesse caso o Farol mostra "A medição não terminou".
+Cada análise é cortada em 45 segundos (`ANALYSIS_TIMEOUT_SECONDS`, máximo 50), e a rota tem `maxDuration` de 60s, dentro do limite de qualquer plano da Vercel. Site pesado demais recebe a mensagem "Esse site demorou demais pra medir", em vez de estourar a função. Aos 30s aparece um aviso de demora, e dá pra cancelar a qualquer momento.
 
 ## Estrutura
 
