@@ -352,6 +352,73 @@ export function whatsappMessage(host: string, score: number, reportUrl: string):
   return `Olá! Analisei o site ${host} no Farol (nota ${score}) e quero ajuda pra arrumar os problemas: ${reportUrl}`;
 }
 
+/* ------------------------------------------------------------------
+   5.6 Casos de antes e depois
+   ------------------------------------------------------------------ */
+
+const bytesFormat = new Intl.NumberFormat(LOCALE, { maximumFractionDigits: 1 });
+
+/** 17609893 -> "17,6 MB"; 295860 -> "296 KB". */
+export function formatBytes(bytes: number): string {
+  if (bytes >= 1_000_000) return `${bytesFormat.format(bytes / 1_000_000)} MB`;
+  return `${Math.round(bytes / 1000)} KB`;
+}
+
+/** 2.64 -> "2,6x" */
+export function formatRatio(ratio: number): string {
+  return `${bytesFormat.format(ratio)}x`;
+}
+
+export const CASE_COPY = {
+  eyebrow: "Antes e depois",
+  title: (before: number, after: number) => `De ${before} para ${after}, com o mesmo visual`,
+  subtitle: (host: string, speedup: string) =>
+    `O ${host} ficou ${speedup} mais rápido pra mostrar o conteúdo no celular, sem perder o vídeo, o 3D e as animações. Tudo abaixo foi medido, não estimado.`,
+  before: "Antes",
+  after: "Depois",
+  points: (delta: number) => `+${delta} pontos`,
+  numbers: {
+    title: "Os números que mudaram",
+    description: "Cada valor foi medido nas duas versões, do mesmo jeito.",
+  },
+  weight: {
+    title: "O peso da página, em escala",
+    description: (ratio: string) => `A versão nova baixa ${ratio} menos dados pra abrir. É o que mais pesa no 4G.`,
+  },
+  categories: {
+    title: "Nota por categoria",
+  },
+  changes: {
+    title: "O que foi feito",
+    description: "Nenhuma mudança tirou algo do site. Tudo continua lá, só chega na hora certa.",
+  },
+  resolved: {
+    title: "Problemas resolvidos",
+    summary: (resolved: number, total: number) => `${resolved} de ${total} problemas resolvidos`,
+    remaining: (count: number) =>
+      count === 0 ? "Nenhum problema restante." : `Ainda dá pra melhorar em ${plural(count, "ponto", "pontos")}, todos de impacto menor.`,
+  },
+  reports: {
+    title: "Relatórios completos",
+    before: "Ver relatório de antes",
+    after: "Ver relatório de depois",
+  },
+  method: (text: string, date: string) => `${text} Medido em ${date}.`,
+  cta: {
+    title: "Quer um antes e depois assim no seu site?",
+    body: "Comece pela análise gratuita. Em menos de um minuto você sabe o que está pesando.",
+    analyze: "Analisar meu site",
+  },
+  teaser: {
+    eyebrow: "Caso real",
+    title: (before: number, after: number) => `De ${before} para ${after} sem mudar o visual`,
+    action: "Ver o antes e depois",
+  },
+  reportBanner: (host: string, version: "antes" | "depois") =>
+    `Este é o relatório de ${version} do caso ${host}.`,
+  reportBannerAction: "Ver a comparação",
+} as const;
+
 /** Tempo limite da analise: diz o que aconteceu, o que isso ja revela e o que fazer. */
 export function timeoutError(seconds: number): ErrorCopy {
   return {

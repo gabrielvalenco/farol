@@ -1,0 +1,71 @@
+{
+  "slug": "gabrielvalenco",
+  "host": "gabrielvalenco.com.br",
+  "kind": "Portfólio de desenvolvedor",
+  "measuredAt": "2026-09-16T20:45:00.000Z",
+  "method": "Medido com o Lighthouse no mesmo computador, simulando um celular com 4G. Mediana de 3 medições de cada versão.",
+  "before": {
+    "report": "caso-gabrielvalenco-antes",
+    "score": 60,
+    "fcp": 3759,
+    "lcp": 8358,
+    "tbt": 461,
+    "cls": 1.158,
+    "speedIndex": 4013,
+    "weightBytes": 17609893,
+    "requests": 33
+  },
+  "after": {
+    "report": "caso-gabrielvalenco-depois",
+    "score": 96,
+    "fcp": 2031,
+    "lcp": 3159,
+    "tbt": 0,
+    "cls": 0,
+    "speedIndex": 2031,
+    "weightBytes": 295860,
+    "requests": 17
+  },
+  "changes": [
+    {
+      "title": "Vídeo de abertura sob demanda",
+      "detail": "O vídeo de 8,7 MB só começa a baixar quando a pessoa rola ou toca na tela. Até lá aparece o primeiro quadro dele, com 56 KB.",
+      "effect": "−8,7 MB na abertura"
+    },
+    {
+      "title": "Imagens dos projetos em WebP",
+      "detail": "As capturas caíram de cerca de 2 MB para menos de 90 KB cada, sem perda visível, e só carregam quando vão aparecer.",
+      "effect": "−5,8 MB na abertura"
+    },
+    {
+      "title": "3D só quando aparece",
+      "detail": "O modelo 3D e a biblioteca que o desenha carregam perto da seção e param quando saem da tela. A iluminação, que vinha de um arquivo de 1,5 MB, agora é gerada no navegador.",
+      "effect": "−1,7 MB na abertura"
+    },
+    {
+      "title": "Nada pula na tela",
+      "detail": "O rodapé aparecia no topo e era empurrado para baixo quando a página chegava. Agora cada coisa aparece direto no lugar certo.",
+      "effect": "Estabilidade de 1,16 para 0"
+    },
+    {
+      "title": "Animações que descansam",
+      "detail": "Os efeitos que rodavam sem parar, mesmo com a página parada, agora dormem até alguém rolar ou mexer o mouse.",
+      "effect": "Travamento de 461 ms para zero"
+    },
+    {
+      "title": "Fonte servida pelo próprio site",
+      "detail": "A fonte deixou de depender do Google Fonts, que segurava a primeira pintura da tela.",
+      "effect": "1 bloqueio a menos"
+    },
+    {
+      "title": "Links diretos funcionando",
+      "detail": "Abrir /about, /projects ou /experience direto dava erro 404. Agora essas páginas abrem normalmente, e a foto da página Sobre voltou a aparecer.",
+      "effect": "3 páginas recuperadas"
+    },
+    {
+      "title": "Pronto pra compartilhar e pro Google",
+      "detail": "Imagem de prévia no WhatsApp, endereço canônico, robots.txt, mapa do site e textos pequenos com contraste suficiente.",
+      "effect": "SEO e acessibilidade em 100"
+    }
+  ]
+}

@@ -27,6 +27,8 @@ export interface ScoreRingProps {
   label?: string;
   /** `false` renderiza direto no valor final (impressao, OG, lista longa). */
   animate?: boolean;
+  /** Segundos antes de comecar a desenhar. Pra encadear aneis (antes e depois). */
+  delay?: number;
   className?: string;
 }
 
@@ -34,7 +36,14 @@ export interface ScoreRingProps {
  * Anel de score (DESIGN.md 6.2). SVG feito a mao, sem biblioteca de grafico.
  * `drawRing` e `countUp` compartilham o mesmo motion value, entao andam juntos.
  */
-export function ScoreRing({ value, size = 168, label, animate: shouldAnimate = true, className }: ScoreRingProps) {
+export function ScoreRing({
+  value,
+  size = 168,
+  label,
+  animate: shouldAnimate = true,
+  delay = 0,
+  className,
+}: ScoreRingProps) {
   const score = clampScore(value);
   const meta = scoreMeta(score);
   const { reduced, score: transition } = useMotion();
@@ -62,9 +71,9 @@ export function ScoreRing({ value, size = 168, label, animate: shouldAnimate = t
       return;
     }
     if (!inView) return;
-    const controls = animate(progress, score, transition);
+    const controls = animate(progress, score, { ...transition, delay });
     return () => controls.stop();
-  }, [inView, skip, score, progress, transition]);
+  }, [inView, skip, score, progress, transition, delay]);
 
   const numberSize = size * NUMBER_RATIO;
   const accessibleName = `${label ? `${label}: ` : ""}nota ${score} de 100, ${meta.label}`;

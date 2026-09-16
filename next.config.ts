@@ -11,8 +11,10 @@ const nextConfig: NextConfig = {
       "./node_modules/@fontsource/inter/files/inter-latin-400-normal.woff",
       "./node_modules/@fontsource/inter/files/inter-latin-600-normal.woff",
       "./data/examples/**/*",
+      "./data/cases/**/*",
     ],
     "/r/[slug]": ["./data/examples/**/*"],
+    "/casos/[slug]": ["./data/examples/**/*", "./data/cases/**/*"],
     "/r/[slug]/print": ["./data/examples/**/*"],
   },
 };

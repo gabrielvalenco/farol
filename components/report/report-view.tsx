@@ -8,7 +8,8 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import type { Report } from "@/lib/analysis/types";
-import { COPY, formatDate, REPORT_COPY, verdict, verdictDetails } from "@/lib/copy";
+import { caseOfReport } from "@/lib/case-slug";
+import { CASE_COPY, COPY, formatDate, REPORT_COPY, verdict, verdictDetails } from "@/lib/copy";
 import { scoreMeta } from "@/lib/score";
 import { cn } from "@/lib/utils";
 
@@ -29,6 +30,7 @@ export function ReportView({ report, print = false }: { report: Report; print?: 
   const highImpact = report.issues.filter((issue) => issue.impact === "high").length;
   const details = verdictDetails(report.loadTimeMs, highImpact);
   const shareText = `${report.host}: nota ${report.score} de 100 no Farol. ${verdict(report.score)}`;
+  const partOfCase = caseOfReport(report.slug);
   const vitalsNote = report.metrics.every((m) => m.source === "field")
     ? REPORT_COPY.vitals.field
     : report.metrics.every((m) => m.source === "lab")
@@ -58,6 +60,15 @@ export function ReportView({ report, print = false }: { report: Report; print?: 
       )}
 
       <main className={cn("container-page flex flex-col gap-14 pb-14 sm:gap-20 sm:pb-20", print ? "pt-8" : "pt-8 sm:pt-10")}>
+        {partOfCase && !print ? (
+          <p data-print="hide" className="-mb-8 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-sm bg-accent-soft px-3 py-2.5 text-body-sm text-ink-700 sm:-mb-10">
+            {CASE_COPY.reportBanner(report.host, partOfCase.version)}
+            <Link href={`/casos/${partOfCase.slug}`} className="font-medium text-accent hover:text-accent-hover">
+              {CASE_COPY.reportBannerAction}
+            </Link>
+          </p>
+        ) : null}
+
         {/* 1. Header do relatorio */}
         <header id="report-header" className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
           <div className="min-w-0">

@@ -352,6 +352,43 @@ ouviu falar de Lighthouse.
    texto "Quer que a gente arrume isso pra você?" e um botão que abre o WhatsApp.
    Esse bloco é configurável por env var, é o que transforma o projeto em ferramenta comercial.
 
+### 5.6 Antes e depois (`/casos/[slug]`)
+
+A prova de que o Farol serve pra alguma coisa: um site real, medido antes e
+depois das correções, do mesmo jeito. Os números são o argumento; nada de
+depoimento ou adjetivo.
+
+**Ordem de leitura:**
+
+1. **Hero centralizado:** `label` "Antes e depois · domínio", `h1` com os dois números
+   ("De 60 para 96, com o mesmo visual") e uma linha de impacto. Abaixo, dois
+   `ScoreRing` lado a lado com uma seta e o chip "+N pontos". O anel de depois
+   começa a desenhar 500ms depois do de antes.
+2. **Os números que mudaram:** grade de 6 cards (performance, tempo até o conteúdo
+   principal, peso, estabilidade, travamento, arquivos). Em cada um, o valor de antes riscado
+   em `--ink-500`, uma seta e o valor de depois em 28/600, que conta de antes pra depois
+   quando entra na tela. Um chip com o ganho ("2,6x mais rápido").
+3. **O peso em escala:** duas barras na mesma régua (`--bad` e `--good`). A diferença aparece
+   do tamanho real, sem eixo quebrado.
+4. **Nota por categoria:** duas barras finas por categoria, antes em 45% de opacidade.
+5. **O que foi feito:** cards numerados, com título, explicação em português de gente
+   e o efeito medido em mono `--good-ink`.
+6. **Problemas resolvidos:** "N de M" com uma régua de M segmentos, e a lista dos
+   resolvidos (check) e dos que continuam (círculo tracejado, `--ink-500`).
+7. **Relatórios completos** de antes e depois, e a nota de método com a data.
+8. **Conversão:** bloco `--bg-muted` com "Analisar meu site" e, se configurado, WhatsApp.
+
+**Regras:**
+
+- As duas versões são medidas do mesmo jeito (mesma máquina, mesmas flags, mediana de 3),
+  e o método aparece na página. Número que não foi medido não entra.
+- Números e barras chegam do servidor no valor final. Só um bloco que ainda está fora da tela
+  volta pro valor de antes e anima ao aparecer, o que evita piscar e layout shift.
+- Na landing, um card de destaque (`CaseTeaser`) leva ao caso, com os anéis parados.
+- Os relatórios de um caso mostram uma faixa `--accent-soft` com link pra comparação.
+- Gerado por `npm run case:build` a partir de dois JSON do Lighthouse
+  (`data/cases/<slug>.json` e `data/examples/caso-<slug>-antes|depois.json`).
+
 ### 5.4 Versão de impressão (`/r/[slug]/print`)
 
 Mesma rota, CSS `@media print`: remove header sticky, remove botões, força

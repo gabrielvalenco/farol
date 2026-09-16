@@ -56,15 +56,20 @@ export async function fetchHtmlFacts(url: string): Promise<HtmlFacts> {
     throw new AnalysisError("measure_failed", `nao e html: ${response.contentType}`);
   }
 
-  const $ = load(response.body);
-  const base = response.finalUrl;
+  return parseHtmlFacts(response.body, response.finalUrl, response.status);
+}
+
+/** Extrai os fatos de um HTML ja baixado. Pura: usada tambem pelo script de casos. */
+export function parseHtmlFacts(html: string, finalUrl: string, status = 200): HtmlFacts {
+  const $ = load(html);
+  const base = finalUrl;
   const meta = (selector: string) => text($(selector).attr("content"));
 
   const bodyText = $("body").clone().find("script,style,noscript,svg").remove().end().text();
 
   return {
-    finalUrl: response.finalUrl,
-    status: response.status,
+    finalUrl,
+    status,
     title: text($("title").first().text()),
     description: meta('meta[name="description"]'),
     lang: text($("html").attr("lang")),

@@ -12,7 +12,8 @@ import path from "node:path";
 
 import { ImageResponse } from "next/og";
 
-import { COPY, verdict } from "@/lib/copy";
+import { getCaseStudy } from "@/lib/cases";
+import { CASE_COPY, COPY, verdict } from "@/lib/copy";
 import { scoreBand } from "@/lib/score";
 import { getReport } from "@/lib/storage";
 import { TOKENS } from "@/lib/tokens";
@@ -68,7 +69,14 @@ function Wordmark() {
 }
 
 export async function GET(request: Request) {
-  const slug = new URL(request.url).searchParams.get("slug");
+  const params = new URL(request.url).searchParams;
+  const caseSlug = params.get("case");
+  if (caseSlug) {
+    const study = await getCaseStudy(caseSlug);
+    if (study) return caseImage(study.host, study.before.score, study.after.score, await loadFonts());
+  }
+
+  const slug = params.get("slug");
   const report = slug ? await getReport(slug).catch(() => null) : null;
   const fontData = await loadFonts();
 
@@ -159,5 +167,65 @@ export async function GET(request: Request) {
       </div>
     ),
     common,
+  );
+}
+
+/** 5.6: imagem do antes e depois. Os dois numeros na cor da faixa, com seta. */
+function caseImage(host: string, before: number, after: number, fontData: Awaited<ReturnType<typeof loadFonts>>) {
+  const b = BAND[scoreBand(before)];
+  const a = BAND[scoreBand(after)];
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          ...SIZE,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          padding: "72px 80px",
+          background: TOKENS.bgSubtle,
+          fontFamily: "Inter",
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <span style={{ fontSize: 28, fontWeight: 600, color: TOKENS.ink500 }}>{CASE_COPY.eyebrow}</span>
+          <span style={{ fontSize: 48, fontWeight: 600, letterSpacing: "-0.03em", color: TOKENS.ink900 }}>{host}</span>
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 48 }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <span style={{ fontSize: 150, fontWeight: 600, letterSpacing: "-0.04em", lineHeight: 1, color: b.ink }}>{before}</span>
+            <span style={{ fontSize: 26, color: TOKENS.ink500 }}>{CASE_COPY.before}</span>
+          </div>
+          <svg width="96" height="48" viewBox="0 0 96 48" fill="none">
+            <path d="M4 24h84M68 6l20 18-20 18" stroke={TOKENS.ink400} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <span style={{ fontSize: 150, fontWeight: 600, letterSpacing: "-0.04em", lineHeight: 1, color: a.ink }}>{after}</span>
+            <span style={{ fontSize: 26, color: TOKENS.ink500 }}>{CASE_COPY.after}</span>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              marginLeft: 24,
+              padding: "10px 22px",
+              borderRadius: 9999,
+              background: TOKENS.goodSoft,
+              color: TOKENS.goodInk,
+              fontSize: 34,
+              fontWeight: 600,
+            }}
+          >
+            {CASE_COPY.points(after - before)}
+          </div>
+        </div>
+
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Wordmark />
+          <span style={{ fontSize: 24, color: TOKENS.ink500 }}>{COPY.brand.tagline}</span>
+        </div>
+      </div>
+    ),
+    { ...SIZE, fonts: fontData, headers: { "cache-control": "public, max-age=3600" } },
   );
 }

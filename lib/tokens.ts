@@ -16,6 +16,7 @@ export const TOKENS = {
   accent: "#2F5BFF",
   good: "#0E9F6E",
   goodInk: "#067A55",
+  goodSoft: "#E7F7F0",
   warn: "#D98A00",
   warnInk: "#9A5800",
   bad: "#E0413F",

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 
 import { Wordmark } from "@/components/brand";
-import { FEATURED_EXAMPLE } from "@/lib/examples";
+import { FEATURED_CASE, FEATURED_EXAMPLE } from "@/lib/examples";
 import { cn } from "@/lib/utils";
 
 /**
@@ -56,7 +56,10 @@ export function SiteHeader({ compact, watchId }: { compact?: ReactNode; watchId?
             )}
             aria-hidden={compact && showCompact ? true : undefined}
           >
-            <HeaderLink href="/#como-funciona">Como funciona</HeaderLink>
+            <HeaderLink href="/#como-funciona" className="max-sm:hidden">
+              Como funciona
+            </HeaderLink>
+            <HeaderLink href={`/casos/${FEATURED_CASE}`}>Antes e depois</HeaderLink>
             <HeaderLink href={`/r/${FEATURED_EXAMPLE.slug}`}>Ver exemplo</HeaderLink>
           </nav>
 
@@ -78,11 +81,14 @@ export function SiteHeader({ compact, watchId }: { compact?: ReactNode; watchId?
   );
 }
 
-function HeaderLink({ href, children }: { href: string; children: ReactNode }) {
+function HeaderLink({ href, children, className }: { href: string; children: ReactNode; className?: string }) {
   return (
     <Link
       href={href}
-      className="inline-flex min-h-11 items-center rounded-sm px-2.5 text-body-sm text-ink-500 transition-[color] duration-150 hover:text-ink-900"
+      className={cn(
+        "inline-flex min-h-11 items-center rounded-sm px-2 text-body-sm whitespace-nowrap text-ink-500 transition-[color] duration-150 hover:text-ink-900 sm:px-2.5",
+        className,
+      )}
     >
       {children}
     </Link>

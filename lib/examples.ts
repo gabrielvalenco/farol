@@ -9,5 +9,8 @@ export const EXAMPLES = [
   { host: "rosevalenco.com.br", slug: "exemplo-rosevalenco" },
 ] as const;
 
+/** Caso de antes e depois em destaque (data/cases/). Usado no header e na landing. */
+export const FEATURED_CASE = "gabrielvalenco";
+
 /** O exemplo que o header abre em "Ver exemplo". */
 export const FEATURED_EXAMPLE = EXAMPLES[1];

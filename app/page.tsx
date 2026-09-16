@@ -1,9 +1,10 @@
 import { Analyzer } from "@/components/analyzer";
+import { CaseTeaser } from "@/components/case/case-teaser";
 import { FeatureGrid } from "@/components/feature-grid";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { COPY } from "@/lib/copy";
-import { EXAMPLES } from "@/lib/examples";
+import { EXAMPLES, FEATURED_CASE } from "@/lib/examples";
 
 /** Landing (DESIGN.md 5.1): uma tela, uma acao. */
 export default function Home() {
@@ -32,6 +33,10 @@ export default function Home() {
               ))}
             </p>
           </div>
+        </section>
+
+        <section aria-label="Caso real" className="container-page">
+          <CaseTeaser slug={FEATURED_CASE} />
         </section>
 
         <section id="como-funciona" className="container-page scroll-mt-20 py-14 sm:py-20">
