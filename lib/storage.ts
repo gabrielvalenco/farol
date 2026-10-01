@@ -27,12 +27,45 @@ type Sql = ReturnType<typeof postgres>;
 let sql: Sql | null = null;
 let schemaReady: Promise<void> | null = null;
 
+/**
+ * Parametros de URL que o `postgres` entende ou que o servidor aceita. Qualquer
+ * outro ele repassa como configuracao de sessao, e o Postgres recusa a conexao
+ * ("unrecognized configuration parameter"). Acontece com as strings da Neon
+ * (`channel_binding=require`) e da integracao Supabase na Vercel
+ * (`supa=base-pooler.x`, `pgbouncer=true`). O TLS e decidido abaixo, em `ssl`.
+ * `options` fica: a Neon usa pra identificar o endpoint.
+ */
+const KEPT_URL_PARAMS = new Set(["options", "application_name"]);
+
+function connectionUrl(raw: string): string {
+  try {
+    const url = new URL(raw);
+    for (const key of [...url.searchParams.keys()]) {
+      if (!KEPT_URL_PARAMS.has(key)) url.searchParams.delete(key);
+    }
+    return url.toString();
+  } catch {
+    return raw;
+  }
+}
+
+/**
+ * O `jsonb` recusa o caractere nulo e metade de emoji (surrogate solto, que
+ * aparece quando um trecho de HTML e cortado no meio). Os dois vem do site
+ * analisado, entao saem antes de salvar.
+ */
+function toJsonb(report: Report): Parameters<Sql["json"]>[0] {
+  return JSON.parse(JSON.stringify(report), (_key, value: unknown) =>
+    typeof value === "string" ? value.replace(/\u0000/g, "").toWellFormed() : value,
+  );
+}
+
 function db(): Sql {
   if (!env.databaseUrl) throw new Error("DATABASE_URL ausente");
   // `prepare: false` e obrigatorio atras de pooler (Supabase e Neon em modo transaction).
   // Banco remoto sempre com TLS, mesmo se a connection string vier sem `sslmode`.
   const local = /@(localhost|127\.0\.0\.1)(:|\/)/.test(env.databaseUrl);
-  sql ??= postgres(env.databaseUrl, {
+  sql ??= postgres(connectionUrl(env.databaseUrl), {
     prepare: false,
     max: 3,
     idle_timeout: 20,
@@ -48,7 +81,15 @@ function db(): Sql {
       created_at timestamptz not null default now(),
       data jsonb not null
     )
-  `.then(() => sql!`create index if not exists farol_reports_host_created on farol_reports (host, created_at desc)`).then(() => undefined);
+  `
+    .then(() => sql!`create index if not exists farol_reports_host_created on farol_reports (host, created_at desc)`)
+    .then(() => undefined)
+    .catch((error: unknown) => {
+      // Sem isso a promessa rejeitada ficava guardada e a instancia inteira
+      // falhava todo salvamento ate reiniciar.
+      schemaReady = null;
+      throw error;
+    });
   return sql;
 }
 
@@ -61,7 +102,7 @@ export async function saveReport(report: Report): Promise<void> {
     await schemaReady;
     await client`
       insert into farol_reports (slug, url, host, score, created_at, data)
-      values (${report.slug}, ${report.url}, ${report.host}, ${report.score}, ${report.createdAt}, ${client.json(JSON.parse(JSON.stringify(report)))})
+      values (${report.slug}, ${report.url}, ${report.host}, ${report.score}, ${report.createdAt}, ${client.json(toJsonb(report))})
       on conflict (slug) do nothing
     `;
     return;
